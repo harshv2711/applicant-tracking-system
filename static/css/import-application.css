@@ -1,0 +1,73 @@
+.import-form {
+    width: fit-content;
+}
+
+.import-form-wrapper {
+    width: fit-content;
+}
+
+.message-title {
+    font-weight: bold;
+    color: green;
+}
+
+.message-card {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+.section-header-title {
+    text-align: center;
+}
+
+.section-header-description {
+    text-align: center;
+}
+
+.section-header {
+    margin: auto;
+}
+
+.import-form-wrapper {
+    margin: auto;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .section-header {
+        width: 100%;
+        text-align: left;
+    }
+
+    .section-header-title, 
+    .section-header-description {
+        text-align: left;
+    }
+
+    input#BulkImport {
+        padding: 1em 0;
+    }
+
+    .import-form label {
+        padding: 0 0 0px 0;
+    }
+
+    .import-form {
+        padding: 1em 0;
+        width: 100%!important;
+    }
+}
+
+label.input-group-text {
+    padding: 3px 12px;
+}
+
+.submit-btn {
+    transition: .2s;
+}
+
+.submit-btn:hover {
+    background: #181818;
+    color: white;
+}
