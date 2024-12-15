@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Application, CandidateExperience, CandidateProfile, CandidateSkillset, Company, IndustryType, JobPosting, ShortlistedCandidate, ShortlistedCandidateTimeline
-
+from unfold.admin import ModelAdmin
 # Register your models here.
 # admin.site.register(Application)
 # admin.site.register(CandidateProfile)
@@ -13,11 +13,11 @@ from .models import Application, CandidateExperience, CandidateProfile, Candidat
 # admin.site.register(ShortlistedCandidateTimeline)
 
 @admin.register(Application)
-class ApplicationAdmin(admin.ModelAdmin):
+class ApplicationAdmin(ModelAdmin):
     list_display = ["application_name", "created_at", "updated_at", "applicationOwner"]
 
 @admin.register(CandidateSkillset)
-class CandidateSkillsetAdmin(admin.ModelAdmin):
+class CandidateSkillsetAdmin(ModelAdmin):
     list_display = ["candidate", "skill_name", "created_at", "updated_at"]
     search_fields = [
         "candidate__first_name",
@@ -27,7 +27,7 @@ class CandidateSkillsetAdmin(admin.ModelAdmin):
     list_filter = ["skill_name",]
 
 @admin.register(CandidateProfile)
-class CandidateProfileAdmin(admin.ModelAdmin):
+class CandidateProfileAdmin(ModelAdmin):
     list_display = [
         "first_name",
         "last_name",
@@ -54,7 +54,7 @@ class CandidateProfileAdmin(admin.ModelAdmin):
     ]
 
 @admin.register(CandidateExperience)
-class CandidateExperienceAdmin(admin.ModelAdmin):
+class CandidateExperienceAdmin(ModelAdmin):
     list_display = [
         "candidate", 
         "company_name", 
@@ -87,7 +87,7 @@ class CandidateExperienceAdmin(admin.ModelAdmin):
     ]
 
 @admin.register(IndustryType)
-class IndustryTypeAdmin(admin.ModelAdmin):
+class IndustryTypeAdmin(ModelAdmin):
     list_display = [
         "industry_type_name"
     ]
@@ -100,7 +100,7 @@ class IndustryTypeAdmin(admin.ModelAdmin):
     ]
 
 @admin.register(Company)
-class CompanyAdmin(admin.ModelAdmin):
+class CompanyAdmin(ModelAdmin):
     list_display = [
         "company_name",
         "company_email",
@@ -141,7 +141,7 @@ class CompanyAdmin(admin.ModelAdmin):
     ]
 
 @admin.register(JobPosting)
-class JobPostingAdmin(admin.ModelAdmin):
+class JobPostingAdmin(ModelAdmin):
     list_display = [
         "company",
         "job_role",
@@ -174,7 +174,7 @@ class JobPostingAdmin(admin.ModelAdmin):
     ]
 
 @admin.register(ShortlistedCandidate)
-class ShortlistedCandidateAdmin(admin.ModelAdmin):   
+class ShortlistedCandidateAdmin(ModelAdmin):   
     list_display = [
         "candidate",
         "job_posting",
@@ -189,7 +189,7 @@ class ShortlistedCandidateAdmin(admin.ModelAdmin):
     ]
 
 @admin.register(ShortlistedCandidateTimeline)
-class ShortlistedCandidateTimelineAdmin(admin.ModelAdmin):
+class ShortlistedCandidateTimelineAdmin(ModelAdmin):
     list_display = [
         "shortlisted_Candidate",
         "timeline_name",
