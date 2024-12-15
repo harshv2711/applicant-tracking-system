@@ -50,3 +50,9 @@ urlpatterns = [
     path("", include("webpages.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+
+
+#Configuration Admin Title 
+admin.site.site_header = "Pivot ATS"
+admin.site.site_title = "Pivot Dashboard"
+admin.site.index_title = "Welcome to Your Dashboard"
