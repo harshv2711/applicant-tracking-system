@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # Create your views here.
+@login_required(login_url="user-login")
 def companyList(request):
     companyList = models.Company.objects.all()
     context = {
@@ -14,10 +15,9 @@ def companyList(request):
     return render(request, "company-list.html", context)
 
 
-
+@login_required(login_url="user-login")
 def companyProfile(request, id):
-    print(id)
-
+    
     companyProfileObject = models.Company.objects.filter(id=id).first()
     jobPostinglist = models.JobPosting.objects.filter(company=companyProfileObject)
     print(jobPostinglist)

@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+
+
 class Application(models.Model):
     application = models.FileField(upload_to="media")
     application_name = models.CharField(max_length=255)
@@ -157,3 +160,11 @@ class CandidateEducation(models.Model):
 
     def __str__(self):
         return f"{self.education_name} - {self.university_college_name} - {self.candidate.email}"
+    
+
+class CompanyProfileViewPermission(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.company.company_name}"
