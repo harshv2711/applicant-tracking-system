@@ -9,12 +9,14 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     applicationOwner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    is_active = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.application_name}"
 # Application model end 
 
 class CandidateProfile(models.Model):
+    is_active = models.BooleanField(null=True, blank=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
@@ -67,6 +69,7 @@ class IndustryType(models.Model):
 
 # company is our client we are hiring for 
 class Company(models.Model):
+    is_active = models.BooleanField(null=True, blank=True)
     company_name = models.CharField(max_length=255)
     company_address = models.TextField(blank=True, null=True)
     company_email = models.CharField(max_length=255, blank=True, null=True)
@@ -89,6 +92,7 @@ class Company(models.Model):
 # Company model end 
 
 class JobPosting(models.Model):
+    is_active = models.BooleanField(null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     job_role = models.CharField(max_length=255)
     experience_required = models.IntegerField(default=0)
@@ -105,6 +109,7 @@ class JobPosting(models.Model):
 # JobPosting model end 
 
 class ShortlistedCandidate(models.Model):
+    is_active = models.BooleanField(null=True, blank=True)
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE,)
     job_posting = models.ForeignKey(JobPosting, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)

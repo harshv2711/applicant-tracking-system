@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Application, CandidateExperience, CandidateProfile, CandidateSkillset, Company, IndustryType, JobPosting, ShortlistedCandidate, ShortlistedCandidateTimeline
 from unfold.admin import ModelAdmin
+
 # Register your models here.
 # admin.site.register(Application)
 # admin.site.register(CandidateProfile)
