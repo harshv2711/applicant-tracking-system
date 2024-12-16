@@ -28,6 +28,11 @@ from unfold.admin import ModelAdmin
 @admin.register(Application)
 class ApplicationAdmin(ModelAdmin):
     list_display = ["application_name", "created_at", "updated_at", "applicationOwner"]
+    search_fields = [
+        "application_name",
+        "application_text",
+        "applicationOwner__username"
+    ]
 
 @admin.register(CandidateSkillset)
 class CandidateSkillsetAdmin(ModelAdmin):
@@ -267,4 +272,21 @@ class CandidateEducationAdmin(ModelAdmin):
         "starting_date",
         "ending_date",
         "pursuing"
+    ]
+
+    search_fields = [
+        "education_name",
+        "university_college_name",
+        "starting_date",
+        "ending_date",
+        "pursuing"
+    ]   
+
+    list_filter = [
+        "education_name",
+        "university_college_name",
+        "pursuing",
+        "starting_date",
+        "ending_date",
+        
     ]

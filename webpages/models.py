@@ -120,6 +120,12 @@ class ShortlistedCandidate(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+    def save(self, *args, **kwargs):
+        self.job_posting.number_of_applicants += 1
+        self.job_posting.save()
+        super().save(*args, **kwargs)
+ 
     def __str__(self):
         return f"{self.id} - {self.candidate.first_name} {self.candidate.last_name} - {self.company.company_name} - {self.job_posting.job_role}"
 # shortlistedCandidateForCompany model end 
