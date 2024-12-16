@@ -1,0 +1,260 @@
+.company-profile-info-item-name {
+    font-size: 22px;
+    margin: 1em 0;
+}
+
+.company-profile-wrapper {
+    max-width: 500px;
+}
+
+.company-profile-info-item-about-company {
+    margin: 0;
+}
+
+.title {
+    font-size: 16px;
+}
+
+.company-profile-info-item-about-company {
+    font-size: 14px;
+}
+
+
+.company-meta-info-group-item-label,
+.company-meta-info-group-item-label-value {
+    font-size: 14px;
+}
+
+.company-meta-info-group-item-label {
+    font-weight: 500;
+    display: block;
+    margin: 3px 0;
+}
+
+.company-meta-info-group-item-cta {
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.company-meta-info-wrapper {
+    margin: 1em 0;
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); */
+    /* gap: 1em; */
+}
+
+.company-meta-info-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+.job-post-list-wrapper {
+    /* border-left: 1px solid #f0f0f0; */
+    /* border-right: 1px solid #f0f0f0; */
+    margin:  0 1em;
+}
+
+.job-post-card {
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    margin: 6px 0;
+}
+
+.shortlisted-candidate-card-meta-work-experience-item {
+    font-size: 14px;
+    margin: 1em 0;
+    /* border-bottom: 1px solid #a3a3a3; */
+}
+
+.shortlisted-candidate-card-meta-work-experience-item {
+    margin: 0;
+    padding: 2px 0;
+}
+
+.shortlisted-candidate-card-meta-wrapper {
+    margin: 1em 0;
+}
+
+.shortlisted-candidate-card-meta-work-experience-wrapper {
+    padding: 1em;
+    border-left: 1px solid rgb(169, 169, 169);
+    position: relative;
+}
+
+.shortlisted-candidate-card-meta-work-experience-wrapper::after {
+    content: "";
+    background: rgb(169, 169, 169);
+    height: 9px;
+    width: 9px;
+    display: block;
+    border-radius: 22px;
+    position:absolute;
+    top: 22px;
+    left: -5px;
+}
+
+.shortlisted-candidate-card-meta-education-list {
+    margin:1em 0;
+}
+
+.shortlisted-candidate-card-meta-work-experience-list-title {
+    font-size: 16px;
+}
+
+.shortlisted-candidate-card-meta-education-list-title, 
+.shortlisted-candidate-card-meta-education-item-title {
+    font-size: 16px;
+}
+
+.shortlisted-candidate-card-meta-education-item {
+    font-size: 14px;
+    margin: 0;
+    padding: 2px;
+    /* border-bottom: 1px solid #a3a3a3; */
+}
+
+.shortlisted-candidate-card-meta-education-wrapper {
+    position: relative;
+    border-left: 1px solid rgb(169, 169, 169);
+    padding: 1em;
+}
+
+.shortlisted-candidate-card-meta-education-wrapper::after {
+    content: "";
+    background: rgb(169, 169, 169);
+    height: 9px;
+    width: 9px;
+    display: block;
+    border-radius: 22px;
+    position:absolute;
+    top: 22px;
+    left: -5px;
+}
+
+.project-cta {
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 2px;
+}
+
+.shortlisted-candidate-card-meta-project-wrapper-title {
+    font-size: 16px;
+    margin: 3px 0;
+}
+
+.shortlisted-candidate-card-meta-project-item {
+    font-size: 14px;
+    padding: 2px;
+    /* border-bottom: 1px solid #a3a3a3; */
+}
+
+.shortlisted-candidate-card-meta-project-item-title {
+    margin: 6px 0;
+}
+
+.shortlisted-candidate-card-meta-project-wrapper {
+    padding: 1em;
+    position: relative;
+}
+
+.shortlisted-candidate-card-meta-project-wrapper::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 28px;
+    bottom: 23px;
+    left: 0%;
+    width: 1px;
+    border-radius: 12px;
+    background: rgb(219, 219, 219);
+}
+
+.shortlisted-candidate-card-meta-project-item {
+    font-size: 14px;
+    padding: 2px;
+    margin-bottom: 0;
+}
+
+.shortlisted-candidate-wrapper {
+    height: 90vh;
+    overflow: scroll;
+}
+
+.shortlisted-candidate-card {
+    padding: 1em!important;
+    border-bottom: 1px solid #e5e5e5;
+    border: 1px solid rgb(203, 203, 203);
+    transition:.3s;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.shortlisted-candidate-card:hover {
+    transition: .3s;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: rgb(241, 241, 241);
+}
+
+
+.shortlisted-candidate-card:hover 
+.shortlisted-candidate-card-info-container{
+    transition: .3s;
+    background: rgb(241, 241, 241);
+}
+
+
+.job-post-card-active {
+    background: rgb(241, 241, 241);
+}
+
+/* .shortlisted-candidate-card-info-container {
+    position: sticky;
+    overflow: hidden;
+    top: 20em;
+    z-index: 999;
+    background: white;
+    padding-bottom: 12px;
+} */
+
+.shortlisted-for-company-list-item {
+    font-size: 14px;
+}
+
+.shortlisted-candidate-info-item-candidate-status {
+    padding: 2px 6px;
+    background: rgb(228, 228, 228);
+    width: fit-content;
+    margin: 9px 0;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.shortlisted-candidate-card-meta-timeline-item-title {
+    font-weight: bold;
+    margin-bottom: 1em;
+    /* display: flex; */
+    align-items: center;
+    gap: 12px;
+    width: fit-content;
+}
+
+.shortlisted-candidate-card-meta-timeline-item-title::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: rgb(169, 169, 169);
+    margin-top: 9px;
+}
+

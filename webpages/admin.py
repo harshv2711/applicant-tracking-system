@@ -1,5 +1,17 @@
 from django.contrib import admin
-from .models import Application, CandidateExperience, CandidateProfile, CandidateSkillset, Company, IndustryType, JobPosting, ShortlistedCandidate, ShortlistedCandidateTimeline
+from .models import (
+    Application, 
+    CandidateExperience, 
+    CandidateProfile, 
+    CandidateSkillset, 
+    Company, 
+    IndustryType, 
+    JobPosting, 
+    ShortlistedCandidate, 
+    ShortlistedCandidateTimeline, 
+    CandidateProject,
+    CandidateEducation,
+)
 from unfold.admin import ModelAdmin
 
 # Register your models here.
@@ -73,6 +85,7 @@ class CandidateExperienceAdmin(ModelAdmin):
         "designation",
         "company_name",
         "number_of_experience",
+        "company_location",
     ]
 
     search_fields = [
@@ -187,6 +200,15 @@ class ShortlistedCandidateAdmin(ModelAdmin):
     list_filter = [
         "job_posting",
         "company__company_name",
+        "candidate__role"
+    ]
+
+    search_fields = [
+        "candidate__first_name"
+        "candidate__last_name"
+        "candidate__role"
+        "candidate__email"
+        "candidate__phone_number"
     ]
 
 @admin.register(ShortlistedCandidateTimeline)
@@ -207,5 +229,42 @@ class ShortlistedCandidateTimelineAdmin(ModelAdmin):
     list_filter = [
     ]
 
+@admin.register(CandidateProject)
+class CandidateProjectAdmin(ModelAdmin):
+    list_display = [
+        "candidate__first_name",
+        "candidate__last_name",
+        "candidate__email",
+        "candidate__role",
+        "project_name",
+        "project_link",
+        "project_description",
+        "start_at",
+        "end_at",
+        "is_active",
+        "created_at",
+        "updated_at"
+    ]
+
+    search_fields = [
+        "candidate__first_name",
+        "candidate__last_name",
+        "candidate__email",
+        "candidate__role",
+        "project_name",
+    ]
+
+    list_filter = [
+        "candidate__role",
+    ]
 
 
+@admin.register(CandidateEducation)
+class CandidateEducationAdmin(ModelAdmin):
+    list_display = [
+        "education_name",
+        "university_college_name",
+        "starting_date",
+        "ending_date",
+        "pursuing"
+    ]

@@ -16,6 +16,7 @@ class Application(models.Model):
 # Application model end 
 
 class CandidateProfile(models.Model):
+    is_blocked = models.BooleanField(null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -45,8 +46,8 @@ class CandidateExperience(models.Model):
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, blank=False, null=False)
     company_name = models.CharField(max_length=255)
     designation = models.CharField(max_length=50)
-    startingDate = models.DateField()
-    endDate = models.DateField()
+    startingDate = models.DateField(blank=True, null=True)
+    endDate = models.DateField(blank=True, null=True)
     summary = models.TextField()
     company_location = models.TextField()
     number_of_experience = models.CharField(max_length=255)
@@ -126,7 +127,33 @@ class ShortlistedCandidateTimeline(models.Model):
     timeline_summary = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    # Interviewer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
         return f"{self.id} - {self.shortlisted_Candidate.company.company_name} - {self.shortlisted_Candidate.job_posting.job_role} - {self.timeline_name} - {self.shortlisted_Candidate.candidate.first_name} {self.shortlisted_Candidate.candidate.last_name}"
 # ShortlistedCandidateTimeline models end 
+
+
+class CandidateProject(models.Model):
+    candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE,)
+    project_name = models.CharField(max_length=255)
+    project_link = models.CharField(max_length=255, blank=True, null=True)
+    project_description = models.TextField()
+    start_at = models.DateField()
+    end_at = models.DateField()
+    is_active = models.BooleanField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.project_name} by {self.candidate.email}"
+    
+class CandidateEducation(models.Model):
+    candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE,)
+    education_name = models.CharField(max_length=255)
+    university_college_name = models.CharField(max_length=255)
+    starting_date = models.DateField(blank=True, null=True)
+    ending_date = models.DateTimeField(blank=True, null=True)
+    pursuing = models.BooleanField(null=True, blank=True, default=False)
+
+    def __str__(self):
+        return f"{self.education_name} - {self.university_college_name} - {self.candidate.email}"
