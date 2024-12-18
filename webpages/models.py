@@ -2,9 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-
-
-
 class Application(models.Model):
     application = models.FileField(upload_to="media")
     application_name = models.CharField(max_length=255)
@@ -30,6 +27,16 @@ class CandidateProfile(models.Model):
     phone_number = models.CharField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    ratingChoices = (
+        ("0", "0"),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
+    )
+    candidate_rating = models.CharField(max_length=5, choices=ratingChoices, default="0")
 
     def __str__(self):
         return f"{self.id}, {self.first_name} {self.last_name}, {self.role}, {self.email}"
@@ -57,7 +64,6 @@ class CandidateExperience(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-   
 # CandidateExperience model end 
 
 
