@@ -7,6 +7,7 @@ from .form import UserUpdateForm
 from .form import ProfileUpdateForm
 
 from .models import Profile
+from client import utils as clientAppUtils
 
 
 # Create your views here.
@@ -53,6 +54,11 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
+            if clientAppUtils.isLoggedInUserIsClient(request.user):
+                messages.error(request, f'Use client login page to login as a Client.')
+                auth.logout(request)
+                return redirect('user-login')
+            
             messages.success(request, f'Welcome back {user.username}')
             return redirect('webpages-search')
         else:

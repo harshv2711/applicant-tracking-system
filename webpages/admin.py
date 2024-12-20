@@ -13,6 +13,7 @@ from .models import (
     CandidateEducation,
 )
 from unfold.admin import ModelAdmin
+from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
 # admin.site.register(Application)
@@ -26,7 +27,7 @@ from unfold.admin import ModelAdmin
 # admin.site.register(ShortlistedCandidateTimeline)
 
 @admin.register(Application)
-class ApplicationAdmin(ModelAdmin):
+class ApplicationAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = ["application_name", "created_at", "updated_at", "applicationOwner"]
     search_fields = [
         "application_name",
@@ -35,7 +36,7 @@ class ApplicationAdmin(ModelAdmin):
     ]
 
 @admin.register(CandidateSkillset)
-class CandidateSkillsetAdmin(ModelAdmin):
+class CandidateSkillsetAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = ["candidate", "skill_name", "created_at", "updated_at"]
     search_fields = [
         "candidate__first_name",
@@ -45,11 +46,12 @@ class CandidateSkillsetAdmin(ModelAdmin):
     list_filter = ["skill_name",]
 
 @admin.register(CandidateProfile)
-class CandidateProfileAdmin(ModelAdmin):
+class CandidateProfileAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "first_name",
         "last_name",
         "role",
+        "expected_ctc",
         "email",
         "phone_number",
         "address",
@@ -66,13 +68,15 @@ class CandidateProfileAdmin(ModelAdmin):
         "updated_at",
         "linkedin_profile",
         "address",
+        "expected_ctc",
     ]
     list_filter = [
         "role",
+        "expected_ctc",
     ]
 
 @admin.register(CandidateExperience)
-class CandidateExperienceAdmin(ModelAdmin):
+class CandidateExperienceAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "candidate", 
         "company_name", 
@@ -106,7 +110,7 @@ class CandidateExperienceAdmin(ModelAdmin):
     ]
 
 @admin.register(IndustryType)
-class IndustryTypeAdmin(ModelAdmin):
+class IndustryTypeAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "industry_type_name"
     ]
@@ -119,7 +123,7 @@ class IndustryTypeAdmin(ModelAdmin):
     ]
 
 @admin.register(Company)
-class CompanyAdmin(ModelAdmin):
+class CompanyAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "company_name",
         "company_email",
@@ -160,10 +164,12 @@ class CompanyAdmin(ModelAdmin):
     ]
 
 @admin.register(JobPosting)
-class JobPostingAdmin(ModelAdmin):
+class JobPostingAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "company",
         "job_role",
+        "is_live_job_post",
+        "package",
         "experience_required",
         "location",
         "number_of_openings",
@@ -172,28 +178,32 @@ class JobPostingAdmin(ModelAdmin):
         "created_by",
         "created_at",
         "updated_at",
+
     ]
 
     search_fields = [
        "company__company_name",
         "job_role",
+        "package",
         "experience_required",
         "location",
         "number_of_openings",
         "job_description",
+        "is_live_job_post",
     ]
 
 
     list_filter =  [
        "company",
         "job_role",
+        "package",
         "experience_required",
         "location",
         "number_of_openings",
     ]
 
 @admin.register(ShortlistedCandidate)
-class ShortlistedCandidateAdmin(ModelAdmin):   
+class ShortlistedCandidateAdmin(ModelAdmin, ImportExportModelAdmin):   
     list_display = [
         "candidate",
         "job_posting",
@@ -217,10 +227,11 @@ class ShortlistedCandidateAdmin(ModelAdmin):
     ]
 
 @admin.register(ShortlistedCandidateTimeline)
-class ShortlistedCandidateTimelineAdmin(ModelAdmin):
+class ShortlistedCandidateTimelineAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "shortlisted_Candidate",
-        "timeline_name",
+        "comment_title",
+        "comment",
         "created_at",
         "updated_at",
     ]
@@ -229,13 +240,15 @@ class ShortlistedCandidateTimelineAdmin(ModelAdmin):
         "shortlisted_Candidate__candidate__first_name",
         "shortlisted_Candidate__candidate__last_name",
         "shortlisted_Candidate__candidate__email",
+        "comment_title",
+        "comment",
     ]
 
     list_filter = [
     ]
 
 @admin.register(CandidateProject)
-class CandidateProjectAdmin(ModelAdmin):
+class CandidateProjectAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "candidate__first_name",
         "candidate__last_name",
@@ -265,7 +278,7 @@ class CandidateProjectAdmin(ModelAdmin):
 
 
 @admin.register(CandidateEducation)
-class CandidateEducationAdmin(ModelAdmin):
+class CandidateEducationAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = [
         "education_name",
         "university_college_name",
@@ -279,7 +292,7 @@ class CandidateEducationAdmin(ModelAdmin):
         "university_college_name",
         "starting_date",
         "ending_date",
-        "pursuing"
+        "pursuing",
     ]   
 
     list_filter = [

@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="section-header-title" style="max-width: 353px;">
+                {{errorName}}
+            </h1>
+            <p class="section-header-description">
+                {{errorDescription}}
+            </p>
+            
+            <!-- <a href="#" class="hero-section-cta">Read More</a> -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}

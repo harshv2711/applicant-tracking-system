@@ -11,6 +11,98 @@
     <title>Company Profile | ATS Application</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .company-profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+
+        .shortlisted-candidate-card-meta-education-item-comment {
+            border: 1px solid rgb(217, 217, 217);
+            padding: 1em;
+            border-radius: 2px;
+        }
+
+        .shortlisted-candidate-card-meta-education-item-author-icon svg {
+            stroke-width: 2px;
+            color: gray;
+        }
+
+        .shortlisted-candidate-card-meta-education-item-author {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 6px 0;
+            justify-content: space-between;
+        }
+
+        .shortlisted-candidate-card-meta-education-item-author-icon {
+            padding: 9px;
+            border: 1px solid gray;
+            background: gray;
+        }
+
+        .shortlisted-candidate-card-meta-education-item-author .group {
+            display: flex;
+            gap: 9px;
+        }
+
+        .shortlisted-candidate-info-item-candidate-status-blacklisted {
+            background: #ffe7e7;
+            color: red;
+            border-color: red;
+        }
+
+
+        .job-post-filter-tab-btn {
+            padding: 6px 12px;
+            border: 1px solid rgb(223, 223, 223);
+            width: 100%;
+        }
+
+        .job-post-filter-tab-btn:nth-child(1) {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        .job-post-filter-tab-btn:nth-child(2) {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .job-post-filter {
+            display: flex;
+            margin: 1em 0;
+        }
+
+        .job-post-filter-tab-btn-active {
+            background: #181818;
+            color: white;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(".job-post-card-is_live_job_post").show()
+            $(".job-post-card-is_closed_job_post").hide()
+            $(".job-post-filter-tab-btn").click(function () {
+                $(".job-post-filter-tab-btn").removeClass("job-post-filter-tab-btn-active")
+                $(this).addClass("job-post-filter-tab-btn-active")
+            })
+
+            $(".job-post-filter-tab-is-live-job-post-btn").click(function () {
+                $(".job-post-card-is_closed_job_post").hide()
+                $(".job-post-card-is_live_job_post").show()
+            })
+
+            $(".job-post-filter-tab-is-closed-job-post-btn").click(function () {
+                $(".job-post-card-is_closed_job_post").show()
+                $(".job-post-card-is_live_job_post").hide()
+            })
+
+        })
+    </script>
 </head>
 
 <body>
@@ -22,11 +114,11 @@
         <div class="container">
 
             <div class="company-profile-grid">
-                
-                <div class="company-profile-wrapper">
+
+                <div class="company-profile-wrapper" style="display: none;">
                     <div class="company-profile">
                         <h1 class="company-profile-info-item company-profile-info-item-name">
-                          {{companyObject.company_name}}
+                            {{companyObject.company_name}}
                         </h1>
                         <h5 class="title">About this company</h5>
 
@@ -39,7 +131,8 @@
                                     Company domain name
                                 </label>
                                 <div class="company-meta-info-group-item-label-value">
-                                    <a href="{{companyObject.company_domain_name}}" class="company-meta-info-group-item-cta">Visit</a>
+                                    <a href="{{companyObject.company_domain_name}}"
+                                        class="company-meta-info-group-item-cta">Visit</a>
                                 </div>
                             </div>
                             <div class="company-meta-info-group">
@@ -122,8 +215,15 @@
                 <!-- company job post list  -->
                 <div class="job-post-list-wrapper">
                     <h1 class="wrapper-title"> {{jobPostLen}} Job Post</h1>
+
+                    <div class="job-post-filter">
+                        <button class="job-post-filter-tab-btn job-post-filter-tab-is-live-job-post-btn job-post-filter-tab-btn-active">Live Job Post</button>
+                        <button class="job-post-filter-tab-btn job-post-filter-tab-is-closed-job-post-btn">Closed Job Post</button>
+                    </div>
+
                     {% for jobPost in jobPostinglist%}
-                    <div class="job-post-card " id="jobPost{{jobPost.id}}Candidates">
+                    {% if jobPost.is_active %}
+                    <div class="job-post-card {%if jobPost.is_live_job_post %} job-post-card-is_live_job_post {% else %} job-post-card-is_closed_job_post {% endif %}" id="jobPost{{jobPost.id}}Candidates">
                         <h1 class="job-post-card-item job-post-card-item-title">
                             {{jobPost.job_role}}
                         </h1>
@@ -141,12 +241,12 @@
                         <div class="job-post-card-meta-info">
                             <span class="job-post-card-meta-info-item">
                                 <!-- 50,000-2.5 Lacs PA -->
-                                Not disclosed
+                                {{jobPost.package}}
                             </span>
                             <span class="line"></span>
                             <span class="job-post-card-meta-info-item">
-                               {{jobPost.experience_required}} Yrs
-                            </span> 
+                                {{jobPost.experience_required}} Yrs
+                            </span>
                             <span class="line"></span>
 
                             <span class="job-post-card-meta-info-item">
@@ -162,85 +262,109 @@
                         </div>
 
                     </div>
+                    {% endif %}
                     {% endfor %}
-                   
+
                 </div>
                 <!-- shortlisted candidate list  -->
                 <div class="shortlisted-candidate-wrapper">
                     <!-- <h1 class="wrapper-title shortlisted-candidate-wrapper-title">Shortlisted candidate</h1> -->
                     {% for jobPostingItem in jobPostinglist%}
                     <div class="jobPostCandidates jobPost{{jobPostingItem.id}}Candidates">
-                        <h1 class="wrapper-title shortlisted-candidate-wrapper-title"> {{jobPostingItem.number_of_candidates}} Candidate applied for {{jobPostingItem.job_role}}</h1>
+                        <h1 class="wrapper-title shortlisted-candidate-wrapper-title">
+                            {{jobPostingItem.number_of_candidates}} Candidate applied for {{jobPostingItem.job_role}}
+                        </h1>
                         <!-- shortlisted candidate card - 1  -->
                         {% for shortlistedCandidate in jobPostingItem.shortlistedCandidateList %}
                         <div class="shortlisted-candidate-card">
                             <div class="shortlisted-candidate-card-info-container">
-                            <div class="shortlisted-candidate-card-row">
-                                <div class="wrapper">
-                                    <h1 class="shortlisted-candidate-info-item shortlisted-candidate-info-item-name">
-                                       {{shortlistedCandidate.candidate.first_name}} {{shortlistedCandidate.candidate.last_name}}
-                                    </h1>
-                                    <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-candidate-status">
-                                        In Interview Process
-                                    </p>
-                                    <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-role">
-                                        {{shortlistedCandidate.candidate.role}}
-                                    </p>
+                                <div class="shortlisted-candidate-card-row">
+                                    <div class="wrapper">
+                                        <h1
+                                            class="shortlisted-candidate-info-item shortlisted-candidate-info-item-name">
+                                            {{shortlistedCandidate.candidate.first_name}}
+                                            {{shortlistedCandidate.candidate.last_name}}
+                                        </h1>
+                                        <p
+                                            class="shortlisted-candidate-info-item shortlisted-candidate-info-item-candidate-status">
+                                            {{shortlistedCandidate.candidate.status_in_interview}}
+                                        </p>
+                                        {% if shortlistedCandidate.candidate.is_blocked %}
+                                        <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-candidate-status
+                                             shortlisted-candidate-info-item-candidate-status-blacklisted">
+                                            Blacklisted
+                                        </p>
+                                        {% endif %}
+                                        <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-role">
+                                            {{shortlistedCandidate.candidate.role}}
+                                        </p>
+                                    </div>
+                                    <div class="cta-wrapper">
+                                        <!-- <a href="#"
+                                            class="shortlisted-candidate-cta shortlisted-candidate-cta-resume-application">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-external-link">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6">
+                                                </path>
+                                                <polyline points="15 3 21 3 21 9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a> -->
+                                        <a href="{{shortlistedCandidate.candidate.linkedin_profile}}" target="_blank"
+                                            class="shortlisted-candidate-cta shortlisted-candidate-cta-linkedin">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="144px"
+                                                height="144px">
+                                                <path fill="#0288D1"
+                                                    d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z" />
+                                                <path fill="#FFF"
+                                                    d="M12 19H17V36H12zM14.485 17h-.028C12.965 17 12 15.888 12 14.499 12 13.08 12.995 12 14.514 12c1.521 0 2.458 1.08 2.486 2.499C17 15.887 16.035 17 14.485 17zM36 36h-5v-9.099c0-2.198-1.225-3.698-3.192-3.698-1.501 0-2.313 1.012-2.707 1.99C24.957 25.543 25 26.511 25 27v9h-5V19h5v2.616C25.721 20.5 26.85 19 29.738 19c3.578 0 6.261 2.25 6.261 7.274L36 36 36 36z" />
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="cta-wrapper">
-                                    <a href="#"
-                                        class="shortlisted-candidate-cta shortlisted-candidate-cta-resume-application">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-external-link">
-                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                            <polyline points="15 3 21 3 21 9"></polyline>
-                                            <line x1="10" y1="14" x2="21" y2="3"></line>
-                                        </svg>
-                                    </a>
-                                    <a href="{{shortlistedCandidate.candidate.linkedin_profile}}" target="_blank" class="shortlisted-candidate-cta shortlisted-candidate-cta-linkedin">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="144px"
-                                            height="144px">
-                                            <path fill="#0288D1"
-                                                d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z" />
-                                            <path fill="#FFF"
-                                                d="M12 19H17V36H12zM14.485 17h-.028C12.965 17 12 15.888 12 14.499 12 13.08 12.995 12 14.514 12c1.521 0 2.458 1.08 2.486 2.499C17 15.887 16.035 17 14.485 17zM36 36h-5v-9.099c0-2.198-1.225-3.698-3.192-3.698-1.501 0-2.313 1.012-2.707 1.99C24.957 25.543 25 26.511 25 27v9h-5V19h5v2.616C25.721 20.5 26.85 19 29.738 19c3.578 0 6.261 2.25 6.261 7.274L36 36 36 36z" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-email">
-                                {{shortlistedCandidate.candidate.email}}
-                            </p>
-                            <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-email">
-                                {{shortlistedCandidate.candidate.phone_number}}
-                            </p>
+                                <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-email">
+                                    {{shortlistedCandidate.candidate.email}}
+                                </p>
+                                <p class="shortlisted-candidate-info-item shortlisted-candidate-info-item-email">
+                                    {{shortlistedCandidate.candidate.phone_number}}
+                                </p>
                             </div>
 
 
                             <div class="shortlisted-candidate-card-meta-wrapper">
-                                 <!-- Timeline  -->
-                                 <div class="shortlisted-candidate-card-meta-education-list">
+                                <!-- Timeline  -->
+                                <div class="shortlisted-candidate-card-meta-education-list">
                                     <h1 class="shortlisted-candidate-card-meta-education-list-title ">
-                                        Timeline
+                                        Comment
                                     </h1>
                                     <!-- timeline card  -->
                                     {% for shortlistedCandidateTimeline in shortlistedCandidate.candidateTimelineList%}
                                     <div class="shortlisted-candidate-card-meta-education-wrapper">
-                                        <h1
-                                            class="shortlisted-candidate-card-meta-education-item shortlisted-candidate-card-meta-education-item-title shortlisted-candidate-card-meta-timeline-item-title">
-                                            {{shortlistedCandidateTimeline.timeline_name}}
-                                        </h1>
-                                        <p class="shortlisted-candidate-card-meta-education-item">
-                                            {{shortlistedCandidateTimeline.timeline_summary}}
+                                        <p class="shortlisted-candidate-card-meta-education-item 
+                                        shortlisted-candidate-card-meta-education-item-comment">
+                                            {% if shortlistedCandidateTimeline.comment_title != None %}
+                                            <strong>
+                                                {{shortlistedCandidateTimeline.comment_title}}
+                                            </strong>
+                                            <br>
+                                            {% endif %}
+                                            {{shortlistedCandidateTimeline.comment}}
                                         </p>
-                                        <br>
-                                        <p class="shortlisted-candidate-card-meta-education-item">
-                                            <strong>Created at:</strong>
-                                            {{shortlistedCandidateTimeline.created_at}}
-                                        </p>
-
+                                        <div class="shortlisted-candidate-card-meta-education-item 
+                                            shortlisted-candidate-card-meta-education-item-author">
+                                            <div class="group">
+                                                <div
+                                                    class="shortlisted-candidate-card-meta-education-item-author-icon rounded-circle">
+                                                </div>
+                                                {{shortlistedCandidateTimeline.author}}
+                                            </div>
+                                            <div
+                                                class="shortlisted-candidate-card-meta-education-item shortlisted-candidate-card-meta-comment-item">
+                                                {{shortlistedCandidateTimeline.created_at|date:"d M, Y"}}
+                                            </div>
+                                        </div>
                                     </div>
                                     {% endfor %}
                                 </div>
@@ -259,7 +383,8 @@
                                         <p class="shortlisted-candidate-card-meta-project-item">
                                             {{candidateProject.start_at}} - {{candidateProject.end_at}}
                                         </p>
-                                        <a href="{{candidateProject.project_link}}" target="_blank" class="project-cta">View Project</a>
+                                        <a href="{{candidateProject.project_link}}" target="_blank"
+                                            class="project-cta">View Project</a>
                                         <!-- <a href="#" class="project-cta">Github Repository</a> -->
                                         <h6
                                             class="shortlisted-candidate-card-meta-project-item shortlisted-candidate-card-meta-project-wrapper-title">
@@ -269,7 +394,7 @@
                                         </p>
                                     </div>
                                     {% endfor %}
-                                   
+
                                 </div>
                                 <!-- experience -->
                                 <div class="shortlisted-candidate-card-meta-work-experience-list">
@@ -287,8 +412,8 @@
                                         </p>
 
                                         <p class="shortlisted-candidate-card-meta-work-experience-item">
-                                            Exeprience - {{candidateExperience.startingDate}} - 
-                                             {{candidateExperience.endDate}}
+                                            Exeprience - {{candidateExperience.startingDate}} -
+                                            {{candidateExperience.endDate}}
                                         </p>
                                         <p class="shortlisted-candidate-card-meta-work-experience-item">
                                             Location - {{candidateExperience.company_location}}
@@ -301,7 +426,7 @@
                                         </p>
                                     </div>
                                     {% endfor %}
-                                   
+
                                 </div>
                                 <!-- Education  -->
                                 <div class="shortlisted-candidate-card-meta-education-list">
@@ -320,10 +445,10 @@
                                         <p class="shortlisted-candidate-card-meta-education-item">
                                             {{candidateEducation.starting_date}} - {{candidateEducation.ending_date}}
                                             {% if candidateEducation.pursuing %}
-                                                Pursuing
+                                            Pursuing
                                             {% endif %}
                                         </p>
-                                        
+
                                     </div>
                                     {% endfor %}
                                 </div>
@@ -356,7 +481,7 @@
                 $(`.${$(this).attr("id")}`).toggle()
             })
 
-            
+
         })
     </script>
 </body>

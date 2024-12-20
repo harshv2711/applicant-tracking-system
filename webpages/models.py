@@ -16,7 +16,11 @@ class Application(models.Model):
 # Application model end 
 
 class CandidateProfile(models.Model):
-    is_blocked = models.BooleanField(null=True, blank=True)
+    class Meta:
+        verbose_name = "Candidate"
+        verbose_name_plural = "Candidates"
+
+    is_blocked = models.BooleanField(default=False)
     is_active = models.BooleanField(null=True, blank=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -25,18 +29,29 @@ class CandidateProfile(models.Model):
     address = models.TextField()
     linkedin_profile = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=25)
+    expected_ctc = models.CharField(max_length=50, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    status_in_interview_choices = (
+        ("Shortlisted", "Shortlisted"),
+        ("Initial Communication", "Initial Communication"),
+        ("HR Screening/Preliminary Interview", "HR Screening/Preliminary Interview"),
+        ("Coordination for Technical/Functional Rounds", "Coordination for Technical/Functional Rounds"),
+        ("Feedback and Follow-Up", "Feedback and Follow-Up"),
+        ("Final Interview", "Final Interview"),
+        ("Offer Rollout", "Offer Rollout"),
+        ("Post-Interview Process", "Post-Interview Process"),
+        ("Rejected", "Rejected"),
+    )
+    status_in_interview = models.CharField(max_length=225, choices=status_in_interview_choices, blank=True, null=True, default="Shortlisted")
     ratingChoices = (
-        ("0", "0"),
         ("1", "1"),
         ("2", "2"),
         ("3", "3"),
         ("4", "4"),
         ("5", "5"),
     )
-    candidate_rating = models.CharField(max_length=5, choices=ratingChoices, default="0")
+    candidate_rating = models.CharField(max_length=5, choices=ratingChoices, default="null")
 
     def __str__(self):
         return f"{self.id}, {self.first_name} {self.last_name}, {self.role}, {self.email}"
@@ -79,6 +94,10 @@ class IndustryType(models.Model):
 
 # company is our client we are hiring for 
 class Company(models.Model):
+    class Meta:
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
+
     is_active = models.BooleanField(null=True, blank=True)
     company_name = models.CharField(max_length=255)
     company_address = models.TextField(blank=True, null=True)
@@ -102,9 +121,11 @@ class Company(models.Model):
 # Company model end 
 
 class JobPosting(models.Model):
-    is_active = models.BooleanField(null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+    is_live_job_post = models.BooleanField(default=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     job_role = models.CharField(max_length=255)
+    package = models.CharField(max_length=10, null=True, blank=True, default="Not Disclosed")
     experience_required = models.IntegerField(default=0)
     location = models.CharField(max_length=255)
     number_of_openings = models.IntegerField()
@@ -114,12 +135,13 @@ class JobPosting(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
     def __str__(self):
         return f"{self.id} - {self.job_role} - {self.company.company_name}"
 # JobPosting model end 
 
 class ShortlistedCandidate(models.Model):
-    is_active = models.BooleanField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE,)
     job_posting = models.ForeignKey(JobPosting, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
@@ -138,13 +160,14 @@ class ShortlistedCandidate(models.Model):
      
 class ShortlistedCandidateTimeline(models.Model):
     shortlisted_Candidate = models.ForeignKey(ShortlistedCandidate, on_delete=models.CASCADE)
-    timeline_name = models.CharField(max_length=255)
-    timeline_summary = models.TextField()
+    comment_title = models.CharField(max_length=255, null=True, blank=True)
+    comment = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # Interviewer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
-        return f"{self.id} - {self.shortlisted_Candidate.company.company_name} - {self.shortlisted_Candidate.job_posting.job_role} - {self.timeline_name} - {self.shortlisted_Candidate.candidate.first_name} {self.shortlisted_Candidate.candidate.last_name}"
+        return f"{self.id} - {self.shortlisted_Candidate.company.company_name} - {self.shortlisted_Candidate.job_posting.job_role} - {self.comment_title} - {self.shortlisted_Candidate.candidate.first_name} {self.shortlisted_Candidate.candidate.last_name}"
 # ShortlistedCandidateTimeline models end 
 
 

@@ -1,22 +1,35 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .import service
 from . import models
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from client import utils as clientAppUtils
+
 # Create your views here.
 @login_required(login_url="user-login")
 def companyList(request):
+    if clientAppUtils.isLoggedInUserIsClient(request.user):
+        return render(request, "error-page.html", {
+                "errorName":"Access Denied",
+                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+            })
+
     companyList = models.Company.objects.all()
     context = {
-        "companyList":companyList
+        "companyList":companyList,
     }
     return render(request, "company-list.html", context)
 
 
 @login_required(login_url="user-login")
 def companyProfile(request, id):
+    if clientAppUtils.isLoggedInUserIsClient(request.user):
+        return render(request, "error-page.html", {
+                "errorName":"Access Denied",
+                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+            })
     
     companyProfileObject = models.Company.objects.filter(id=id).first()
     jobPostinglist = models.JobPosting.objects.filter(company=companyProfileObject)
@@ -43,11 +56,10 @@ def companyProfile(request, id):
             candidate.candidateExperienceList = candidateExperienceList
             candidate.candidateEducationList = candidateEducationList
 
-
     context = {
         "companyObject":companyProfileObject,
         "jobPostinglist":jobPostinglist,
-        "jobPostLen":len(jobPostinglist)
+        "jobPostLen":len(jobPostinglist),
     }
 
     return render(request, "company-profile.html", context)
@@ -57,6 +69,11 @@ def homeView(request):
 
 @login_required(login_url="user-login")
 def searchView(request):
+    if clientAppUtils.isLoggedInUserIsClient(request.user):
+        return render(request, "error-page.html", {
+                "errorName":"Access Denied",
+                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+            })
 
     applicationList = []
     applicationLst = []
@@ -85,6 +102,12 @@ def searchView(request):
     
 @login_required(login_url="user-login")
 def importApplicationView(request):
+    if clientAppUtils.isLoggedInUserIsClient(request.user):
+        return render(request, "error-page.html", {
+                "errorName":"Access Denied",
+                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+            })
+    
     if request.method == "POST":
         applicationList = request.FILES.getlist("applications")
         print("++++++")
