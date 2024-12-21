@@ -14,7 +14,7 @@
 
 <body>
     <!-- navbar start  -->
-    {% include 'inc/navbar-2.html' %}
+    {% include 'inc/client/client-navbar-2.html' %}
     <!-- navbar end  -->
 
     <section class="user-register-form-section">
@@ -37,14 +37,13 @@
                         or
                     </div>
                     <div class="form-wrapper">
-                        <form action="{% url 'user-register' %}" method="post">
+                        <form action="{% url 'client-register' %}" method="post">
                             {% if messages %}
                             <div class="message-wrapper">
                                 <ul class="messages">
                                     {% for message in messages %}
                                     <li {% if message.tags %} class="alert alert-{{ message.tags }} pt-1 pb-1"{% endif %}>
                                         {{ message }} 
-                                       
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -79,7 +78,7 @@
                             <button type="submit" class="btn btn-primary">Sign Up</button>
                         </form>
                         <div id="" class="form-text pt-2" style="text-align: center;">
-                            Already have an account? <a href="{% url 'user-login' %}" class="sign-in-cta">Log In</a>
+                            Already have an account? <a href="{% url 'client-login' %}" class="sign-in-cta">Log In</a>
                         </div>
                     </div>
                 </div>

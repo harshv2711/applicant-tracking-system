@@ -57,6 +57,7 @@ class CandidateProfileAdmin(ModelAdmin, ImportExportModelAdmin):
         "address",
         "created_at",
         "updated_at",
+        "status_in_interview",
     ]
     search_fields =  [
         "first_name", 
@@ -69,10 +70,12 @@ class CandidateProfileAdmin(ModelAdmin, ImportExportModelAdmin):
         "linkedin_profile",
         "address",
         "expected_ctc",
+        "status_in_interview",
     ]
     list_filter = [
         "role",
         "expected_ctc",
+        "status_in_interview",
     ]
 
 @admin.register(CandidateExperience)
@@ -171,7 +174,7 @@ class JobPostingAdmin(ModelAdmin, ImportExportModelAdmin):
         "is_live_job_post",
         "package",
         "experience_required",
-        "location",
+        "location", 
         "number_of_openings",
         "number_of_applicants",
         # "job_description",
