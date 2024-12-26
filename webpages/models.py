@@ -203,3 +203,45 @@ class CompanyProfileViewPermission(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.company.company_name}"
+    
+
+class RejectedCandidate(models.Model):
+    is_active = models.BooleanField(default=True)
+    candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE)
+    reasons = (
+        ("Lack of Required Skills","Lack of Required Skills"),
+        ("Insufficient Experience", "Insufficient Experience"),
+        ("Overqualification","Overqualification"),
+        ("Cultural Misfit","Cultural Misfit"),
+        ("Poor Communication Skills","Poor Communication Skills"),
+        ("Inadequate Problem-Solving Abilities","Inadequate Problem-Solving Abilities"),
+        # Professionalism-Related Reasons
+        ("Unprepared for Interviews","Unprepared for Interviews"),
+        ("Unprofessional Behavior","Unprofessional Behavior"),
+        ("Negative Attitude", "Negative Attitude"),
+        ("Inconsistent Information","Inconsistent Information"),
+        # Logistical Reasons
+        ("Salary Expectations Misalignment","Salary Expectations Misalignment"),
+        ("Location Constraints","Location Constraints"),
+        ("Availability Issues","Availability Issues"),
+        ("Visa/Work Authorization Challenges","Visa/Work Authorization Challenges"),
+        # Company-Internal Reasons
+        ("Position Closure","Position Closure"),
+        ("Hiring Freeze","Hiring Freeze"),
+        ("Better Fit Identified","Better Fit Identified"),
+        # Ethical or Background Concerns
+        ("Negative Background Check","Negative Background Check"),
+        ("Legal or Compliance Issues","Legal or Compliance Issues"),
+        ("Conflict of Interest","Conflict of Interest"),
+        )
+    
+    reason_to_reject = models.CharField(max_length=255, choices=reasons)
+
+    def __str__(self):
+        return f"{self.candidate.email} - {self.reason_to_reject}"
+    
+class ReasonToRejectCandidate(models.Model):
+    reason = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.reason}"

@@ -4,7 +4,8 @@ from .views import (
     searchView, 
     importApplicationView, 
     companyProfile,
-    companyList
+    companyList,
+    filterCandidates
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path("import", view=importApplicationView, name="webpages-import"),
     path("company-profile/<int:id>", view=companyProfile, name="webpages-company-profile"),
     path("company", view=companyList, name="webpages-company-list"),
+    path("candidate-filter", view=filterCandidates, name="webpages-filter-candidates"),
 ]

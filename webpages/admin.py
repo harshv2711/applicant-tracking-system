@@ -11,6 +11,8 @@ from .models import (
     ShortlistedCandidateTimeline, 
     CandidateProject,
     CandidateEducation,
+    RejectedCandidate,
+    ReasonToRejectCandidate
 )
 from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
@@ -305,4 +307,44 @@ class CandidateEducationAdmin(ModelAdmin, ImportExportModelAdmin):
         "starting_date",
         "ending_date",
         
+    ]
+
+
+
+@admin.register(RejectedCandidate)
+class RejectedCandidateAdmin(ModelAdmin, ImportExportModelAdmin):
+    list_display = [
+        "candidate__first_name",
+        "candidate__last_name",
+        "candidate__email",
+        "reason_to_reject"
+    ]
+
+    list_filter = [
+        "reason_to_reject"
+    ]
+
+    search_fields = [
+        "candidate__email",
+        "candidate__first_name",
+        "candidate__last_name",
+        "candidate__role",
+        "candidate__phone_number",
+        "candidate__expected_ctc",
+        "candidate__status_in_interview",
+        "candidate__linkedin_profile",
+        "reason_to_reject"
+    ]
+
+
+
+@admin.register(ReasonToRejectCandidate)
+class ReasonToRejectCandidateAdmin(ModelAdmin, ImportExportModelAdmin):
+    list_display = [
+        "id",
+        "reason"
+    ]
+
+    search_fields = [
+        "reason",
     ]

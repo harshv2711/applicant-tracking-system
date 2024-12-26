@@ -8,6 +8,38 @@ from django.contrib import messages
 from client import utils as clientAppUtils
 
 # Create your views here.
+def filterCandidates(request):
+    reasonsToRejectCandidate = models.ReasonToRejectCandidate.objects.all()
+    company = models.Company.objects.all()
+    candidates = models.CandidateProfile.objects.all()
+
+    if request.method == "POST":
+        companyName = request.POST["company"]
+        print(companyName, "+++++")
+    
+    for candidate in candidates:
+        candidateTimelineList = models.ShortlistedCandidateTimeline.objects.filter(shortlisted_Candidate=candidate.id)
+        candidateProjectList = models.CandidateProject.objects.filter(candidate=candidate.id)
+        candidateExperienceList = models.CandidateExperience.objects.filter(candidate=candidate.id)
+        candidateEducationList = models.CandidateEducation.objects.filter(candidate=candidate.id)
+        print(candidateTimelineList)
+        print(candidateProjectList)
+        print(candidateExperienceList)
+        print(candidateEducationList)
+
+        candidate.candidateTimelineList = candidateTimelineList
+        candidate.candidateProjectList = candidateProjectList
+        candidate.candidateExperienceList = candidateExperienceList
+        candidate.candidateEducationList = candidateEducationList
+
+    context = {
+        "reasonsToRejectCandidate":reasonsToRejectCandidate,
+        "candidates":candidates
+    }
+
+    return render(request, "filter.html", context)
+
+
 @login_required(login_url="user-login")
 def companyList(request):
     if clientAppUtils.isLoggedInUserIsClient(request.user):

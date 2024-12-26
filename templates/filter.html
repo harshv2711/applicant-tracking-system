@@ -1,0 +1,594 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static './css/main.css' %}">
+    <link rel="stylesheet" href="{% static './css/filter.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
+    <title>Filter | ATS Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script>
+
+        $(document).ready(function () {
+            $(".comment-wrapper").slideUp(0)
+            $(".project-wrapper").slideUp(0)
+            $(".education-wrapper").slideUp(0)
+            $(".work-experience-wrapper").slideUp(0)
+
+            $(".comment-wrapper-title").click(function () {
+                $(this).siblings().slideToggle()
+            })
+
+            $(".project-wrapper-title").click(function () {
+                $(this).siblings().slideToggle()
+            })
+
+            $(".education-wrapper-title").click(function () {
+                $(this).siblings().slideToggle()
+            })
+
+            $(".work-experience-wrapper-title").click(function () {
+                $(this).siblings().slideToggle()
+            })
+
+
+        })
+    </script>
+
+    <style>
+        .filter-form-btn {
+            padding: 12px 22px;
+            color: white;
+            background: #181818;
+            border: none;
+            width: fit-content;
+            border-radius: 12px;
+        }
+
+        .grid-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1em;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- navbar start  -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Pivonix
+                <small>ATS</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./import-application.html">Import</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Bookmarked Resume</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    Log Out
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- navbar end  -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-header-title">
+                    Effortless Candidate Discovery and Filtering
+                </h1>
+                <p class="section-header-description">
+                    Effortlessly locate the perfect candidates with our advanced search and filter tools. Refine your
+                    search using multiple criteria such as skills, experience, location, and more to find the right
+                    match in seconds.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-form-wrapper">
+                <form action="{% url 'webpages-filter-candidates' %}" method="get" class="filter-form">
+                    <div class="grid-wrapper">
+                        <!-- company filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="companyMultiSelect">Company</label>
+                                <select required name="company[]" id="companyMultiSelect" multiple>
+                                    <option value="1">Company 1</option>
+                                    <option value="2">Company 2 </option>
+                                    <option value="3">Company 3 </option>
+                                    <option value="4">Company 4 </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- company filter wrapper end -->
+                        <!-- candidate role filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateRoleMultiSelect">Candidate Role</label>
+                                <select required name="candidateRole" id="candidateRoleMultiSelect" multiple>
+                                    <option value="1">Graphic Designer</option>
+                                    <option value="2">Digital Marketer</option>
+                                    <option value="3">UI/UX Designer</option>
+                                    <option value="4">Software Developer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- candidate role wrapper end -->
+                        <!-- interview status filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="interviewStatusMultiSelect">
+                                    Interview Status
+                                </label>
+                                <select required name="interviewStatus" id="interviewStatusMultiSelect" multiple>
+                                    <option value="1">All</option>
+                                    <option value="2">Approved Candidate</option>
+                                    <option value="3">Rejected Candidate</option>
+                                    <option value="4">Shortlisted</option>
+                                    <option value="5">Initial Communication</option>
+                                    <option value="6">HR Screening/Preliminary Interview</option>
+                                    <option value="7">Coordination for Technical/Functional Rounds</option>
+                                    <option value="8">Feedback and Follow-Up</option>
+                                    <option value="9">Final Interview</option>
+                                    <option value="10">Offer Rollout</option>
+                                    <option value="11">Post-Interview Process</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- interview status filter wrapper end -->
+                        <!-- candidate ctc filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateCtcMultiSelect">
+                                    Candidate CTC
+                                </label>
+                                <select required name="candidateCtc" id="candidateCtcMultiSelect" multiple>
+                                    <option value="0">All</option>
+                                    <option value="3">3 LPA</option>
+                                    <option value="7">7 LPA</option>
+                                    <option value="9">9 LPA</option>
+                                    <option value="12">12 LPA</option>
+                                    <option value="15">15 LPA</option>
+                                    <option value="18">18 LPA</option>
+                                    <option value="20">20 LPA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- candidate ctc filter wrapper end -->
+                        <!-- candidate skillsets filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateSkillsetMultiSelect">
+                                    Candidate Skillset
+                                </label>
+                                <select required name="candidateSkillset" id="candidateSkillsetMultiSelect" multiple>
+                                    <option value="1">All</option>
+                                    <option value="2">Adobe Photoshop</option>
+                                    <option value="3">Adobe After effect</option>
+                                    <option value="4">3D Modeling</option>
+                                    <option value="5">Content Writting</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- candidate skillsets filter wrapper end -->
+                        <!-- candidate experience filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateExperienceMultiSelect">
+                                    Candidate Experience
+                                </label>
+                                <select required name="candidateExperience" id="candidateExperienceMultiSelect"
+                                    multiple>
+                                    <option value="1">All</option>
+                                    <option value="2">2 Year</option>
+                                    <option value="3">4 Year</option>
+                                    <option value="4">6 Year</option>
+                                    <option value="5">8 Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- candidate experience filter wrapper end -->
+                        <!-- reason to reject candidate filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="reasonToRejectCandidate">
+                                    Reason to Reject Candidate
+                                </label>
+                                <select required name="reasonToRejectCandidate" id="reasonToRejectCandidate" multiple>
+                                    <option value="1">All</option>
+                                    <!-- Job-Specific Reasons -->
+                                    {% for reason in reasonsToRejectCandidate %}
+                                    <option value="{{reason}}">{{reason}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- reason to reject candidate filter wrapper end -->
+                    <button class="filter-form-btn">Search</button>
+                </form>
+            </div>
+            <div class="candidate-list-wrapper">
+                <div class="candidate-list-item">
+                    {% for candidate in candidates %}
+                    <div class="candidate-profile-card">
+                        <div class="candidate-profile-card-group">
+                            <h1 class="candidate-profile-info-item candidate-profile-info-item-name">
+                                {{candidate.first_name}} {{candidate.last_name}}
+                            </h1>
+                            <div class="candidate-profile-rating-wrapper">
+                                <span
+                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-star">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                                <span
+                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-star">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                                <span
+                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-star">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                                <span
+                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-star">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                                <span class="candidate-profile-rating-star-icon-wrapper ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-star">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        <a href="" class="view-resume-cta">View Resume</a>
+                        <p class="candidate-profile-info-item candidate-profile-info-item-role">{{candidate.role}}</p>
+                        <p class="candidate-profile-info-item candidate-profile-info-item-email">
+                            {{candidate.email}}
+                        </p>
+                        <p class="candidate-profile-info-item candidate-profile-info-item-phone-number">
+                            {{candidate.phone_number}}
+                        </p>
+                        <!-- commen list start -->
+                        <div class="comment-list">
+                            <h3 class="wrapper-title comment-wrapper-title">
+                                comment
+                                <span class="dropdown-icon-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </span>
+                            </h3>
+                            {% for commentObj in candidate.candidateTimelineList%}
+                            <div class="comment-wrapper">
+                                <div class="comment">
+                                    {{commentObj.comment}}
+                                </div>
+
+                                <div class="comment-author">
+                                    <div class="comment-author-group">
+                                        <div class="comment-author-profile-img">
+                                        </div>
+                                        {{commentObj.author}}
+                                    </div>
+                                    <div class="comment-date">
+                                        {{commentObj.created_at}}
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        <!-- commen list end -->
+                        <!-- project start -->
+                        <div class="project-list">
+                            <h1 class="wrapper-title project-wrapper-title">
+                                Projects
+                                <span class="dropdown-icon-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </span>
+                            </h1>
+                            {% for projectObj in candidate.candidateProjectList%}
+                            <div class="project-wrapper">
+                                <div class="project-card">
+                                    <h1 class="project-info-item project-name">{{projectObj.project_name}}</h1>
+                                    <p class="project-info-item project-timestamp-date">
+                                        <span class="project-info-item project-starting-date">{{projectObj.start_at}}</span>
+                                        <span>-</span>
+                                        <span class="project-info-item project-ending-date">{{projectObj.end_at}}</span>
+                                    </p>
+                                    <a href="{{projectObj.project_link}}" target="_blank" class="project-cta">View Project</a>
+                                    <!-- <a href="" class="project-cta">Github</a> -->
+                                    <div class="project-summary-wrapper">
+                                        <h3 class="project-wrapper-title project-info-item">Summary</h3>
+                                        <p class="project-summary project-info-item">
+                                            {{projectObj.project_description}}
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                        <!-- project end -->
+                        <!-- work experience start -->
+                        <div class="work-experience-list">
+                            <h1 class="wrapper-title work-experience-wrapper-title">
+                                Work Experience
+                                <span class="dropdown-icon-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </span>
+                            </h1>
+                            {% for workExperienceObj in candidate.candidateExperienceList%}
+                            <div class="work-experience-wrapper">
+                                <div class="work-experience-card">
+                                    <h1 class="work-experience-info-item work-experience-company-name">
+                                        Company - {{workExperienceObj.company_name}}
+                                    </h1>
+                                    <p class="work-experience-info-item work-experience-role">
+                                        Designation - {{workExperienceObj.designation}}
+                                    </p>
+                                    <p class="work-experience-info-item work-experience-timestamp">
+                                        <span class="work-experience-timestamp-item">Exeprience - </span>
+                                        <span
+                                            class="work-experience-timestamp-item work-experience-timestamp-item-starting-date">
+                                            {{workExperienceObj.startingDate}}
+                                        </span>
+                                        <span class="work-experience-timestamp-item">-</span>
+                                        <span
+                                            class="work-experience-timestamp-item work-experience-timestamp-item-ending-date">
+                                            {{workExperienceObj.endDate}}
+                                        </span>
+                                    </p>
+                                    <p class="work-experience-info-item work-experience-info-item-location">
+                                        Location - {{workExperienceObj.company_location}}
+                                    </p>
+                                    <div class="work-experience-summary-wrapper">
+                                        <h3 class="work-experience-wrapper-title work-experience-info-item">Summary</h3>
+                                        <p class="work-experience-summary work-experience-info-item">
+                                            {{workExperienceObj.summary}}
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                        <!-- work experience end -->
+                        <!-- candidate education start -->
+                        <div class="education-list">
+                            <h1 class="wrapper-title education-wrapper-title">
+                                Education
+                                <span class="dropdown-icon-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </span>
+                            </h1>
+
+                            {% for educationObj in candidate.candidateEducationList%}
+                            <div class="education-wrapper">
+                                <div class="education-card">
+                                    <h1 class="education-info-item education-info-item-degree-name">
+                                       {{educationObj.education_name}}
+                                    </h1>
+                                    <p class="education-info-item education-info-item-college-university-name">
+                                        {{educationObj.university_college_name}}
+                                    </p>
+                                    <p class="education-info-item education-timestamp">
+                                        <span
+                                            class="education-timestamp-item education-timestamp-item-starting-date">
+                                            {{educationObj.starting_date}}
+                                        </span>
+                                        <span class="education-timestamp-item">-</span>
+                                        {% if not educationObj.pursuing %}
+                                        <span class="education-timestamp-item education-timestamp-item-ending-date">
+                                            {{educationObj.ending_date}}
+                                        </span>
+                                        {% endif %}
+                                        {% if educationObj.pursuing %}
+                                        <span class="education-timestamp-item education-timestamp-item-ending-date">
+                                            <!-- {{educationObj.pursuing}} -->
+                                            Pursuing
+                                        </span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- candidate education end -->
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        const companyMultiSelect = new MultiSelectTag('companyMultiSelect', {
+            rounded: true,    // default true
+            shadow: false,      // default false
+            placeholder: 'Search contact',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
+        })
+
+        const candidateRoleMultiSelect = new MultiSelectTag('candidateRoleMultiSelect', {
+            rounded: true,    // default true
+            shadow: false,      // default false
+            placeholder: 'Search contact',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
+        })
+
+        const interviewStatusMultiSelect = new MultiSelectTag('interviewStatusMultiSelect', {
+            rounded: true,    // default true
+            shadow: false,      // default false
+            placeholder: 'Search contact',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
+        })
+
+        const candidateCtcMultiSelect = new MultiSelectTag('candidateCtcMultiSelect', {
+            rounded: true,    // default true
+            shadow: false,      // default false
+            placeholder: 'Search contact',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
+        })
+
+        const candidateSkillsetMultiSelect = new MultiSelectTag('candidateSkillsetMultiSelect', {
+            rounded: true,    // default true
+            shadow: false,      // default false
+            placeholder: 'Search contact',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
+        })
+
+        const candidateExperienceMultiSelect = new MultiSelectTag('candidateExperienceMultiSelect', {
+            rounded: true,    // default true
+            shadow: false,      // default false
+            placeholder: 'Search contact',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
+        })
+
+        const reasonToRejectCandidate = new MultiSelectTag('reasonToRejectCandidate', {
+            rounded: true,    // default true
+            shadow: false,      // default false
+            placeholder: 'Search contact',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
+        })
+    </script>
+</body>
+
+</html>

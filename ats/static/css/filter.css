@@ -1,0 +1,284 @@
+.section-header-title {
+    font-size: 16px;
+}
+
+.section-header-description {
+    font-size: 14px;
+}
+
+input.input_checkbox {
+    width: fit-content;
+}
+
+form.filter-form {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); */
+    gap: 1em;
+    max-width: 400px;
+    padding: 0 0 1em 0;
+    margin: 0 0 1em 0;
+}
+
+.filter-section 
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.candidate-profile-info-item {
+    font-size: 16px;
+    margin: 1px 0;
+    padding: 1px 0;
+}
+
+.candidate-profile-info-item-name {
+    font-weight: 800;
+}
+
+.candidate-profile-rating-star-icon-wrapper svg {
+    color: green;
+    height: 14px;
+    
+}
+
+.candidate-profile-rating-star-active svg {
+    fill: green;
+}
+
+.candidate-profile-card-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.candidate-profile-rating-wrapper {
+    padding:0;
+}
+
+.wrapper-title {
+    margin: 1em 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.comment {
+    padding: 1em;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+}
+
+    /* .comment-wrapper {
+        border-left: 1px solid #cccccc;
+        padding-left: 1em;
+        position: relative;
+    } */
+
+.comment-wrapper::before {
+    content: '';
+    background-color: #cccccc;
+    display: block;
+    height: 12px;
+    width: 12px;
+    clip-path: circle();
+    position: absolute;
+    top: 0%;
+    left: -6.5px;
+}
+
+.comment-author {
+    font-size: 14px;
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 6px 0 12px 0;
+}
+
+.comment-author-profile-img {
+    background-color: #50fbc2;
+    height: 22px;
+    width: 22px;
+    clip-path: circle();
+}
+
+.comment-author-group {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.comment-list {
+    display: grid;
+}
+
+.project-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.project-info-item {
+    font-size: 16px;
+}
+
+.project-timestamp-date {
+    margin: 0%;
+    padding: 0%;
+}
+
+.project-timestamp-date span {
+    font-size: 14px;
+}
+
+.project-cta {
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.project-summary {
+    font-size: 14px;
+    padding: 0%;
+    margin: 0%;
+}
+
+.project-wrapper-title {
+    margin: 6px 0 6px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.project-card {
+    padding: 1em;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    margin-bottom: 3px;
+}
+
+.candidate-profile-card {
+    padding: 1em;
+    border-radius: 12px;
+    border: 1px solid #cccccc;
+}
+
+.work-experience-company-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.work-experience-role {
+    margin: 0%;
+    padding: 0%;
+}
+
+.work-experience-info-item-location {
+    margin: 0%;
+}
+
+.work-experience-timestamp {
+    margin: 0%;
+}
+
+.work-experience-wrapper-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 6px 0;
+}
+
+.work-experience-summary {
+    font-size: 14px;
+}
+
+.work-experience-card, .education-card {
+    padding: 1em;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+}
+
+.work-experience-info-item {
+    font-size: 14px;
+}
+
+.work-experience-wrapper, 
+.education-wrapper {
+    margin-bottom: 3px;
+}
+
+.education-info-item-degree-name {
+    font-weight: bold;
+}
+
+.education-info-item  {
+    font-size: 14px;
+    padding: 2px 0;
+    margin:0%;
+}
+
+.wrapper-title {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.dropdown-icon-wrapper svg {
+    stroke-width: 2px;
+    color: #cccccc;
+}
+
+.candidate-list-item {
+    margin-bottom: 6px;
+}
+
+.view-resume-cta {
+    padding: 3px 0;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.candidate-profile-info-item {
+    font-size: 14px;
+}
+
+form.filter-form {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); */
+    gap: 1em;
+    max-width: 100%;
+    padding: 0 2em 1em 0;
+    margin: 0 0 1em 0;
+
+}
+
+@media only screen and (max-width: 1024px) {
+    .filter-section 
+    .container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        width: 100%;
+    }
+
+    .hero-section {
+        padding: 1em;
+    }
+
+
+    form.filter-form {
+        display: grid;
+        /* grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); */
+        gap: 1em;
+        max-width: 100%;
+        padding: 0;
+        margin: 0 0 1em 0;
+
+    }
+
+    section {
+        padding: 1em;
+    }
+}
