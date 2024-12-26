@@ -64,116 +64,6 @@
         }
     </style>
 
-    <script>
-        $(document).ready(function(){
-            $(".select-title-wrapper").click(function(){
-                $(this).find(".dropdown-icon").toggleClass("dropdown-icon-active")
-                $(this).siblings(".option-wrapper").slideToggle()
-            })
-        })
-    </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <style>
-        .select-label-wrapper {
-            padding: 6px 12px;
-            border: 1px solid #cccc;
-            border-radius: 2px;
-        }
-
-        .multi-select-title {
-            font-size: 16px;
-        }
-
-        .option-wrapper {
-            padding: 0;
-            border: 1px solid #cccc;
-            border-top: none;
-        }
-
-        .selct-option-input {
-            font-size: 16px;
-        }
-
-        .select-title-wrapper {
-            padding: 6px 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid #cccc;
-            margin-bottom: 1px;
-        }
-
-        form {
-            max-width: 400px;
-        }
-
-        .dropdown-icon svg {
-            height: 16px;
-            rotate: 0deg;
-            transition: .3s;
-        }
-
-        .dropdown-icon-active svg {
-            rotate: 180deg;
-        }
-
-        * {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .multi-select-option {
-            padding: 2px;
-        }
-
-        .option-wrapper {
-            display: none;
-        }
-
-        .selected-option {
-            width: fit-content;
-            display: block;
-            padding: 6px 3px 6px 9px;
-            border: 1px solid #cccc;
-            border-radius: 2px;
-        }
-
-        .selected-option {
-            display: flex;
-            align-items: center;
-        }
-
-        .selected-option svg {
-            height: 12px;
-        }
-
-        .multi-select-option-input {
-            width: fit-content!important;
-        }
-
-        .multi-select-option {
-            padding: 6px 9px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .multi-select-option label {
-            display: block;
-            width: 100%;
-            cursor: pointer;
-        }
-
-
-        .section-header {
-            margin-bottom: 1em;
-        }
-
-        .multi-select-option:hover {
-            background: rgb(232, 232, 232);
-        }
-    </style>
-
 </head>
 
 <body>
@@ -240,207 +130,126 @@
     <section class="filter-section">
         <div class="container">
             <div class="filter-form-wrapper">
-                <form action="{% url 'webpages-candidate-filter' %}" method="post" class="filter-form">
-                    {% csrf_token %}
-                    <!-- company based select start-->
-                    <div class="select-wrapper">
-                        <div class="multi-select" id="selectid">
-                            <div class="select-title-wrapper">
-                                <label for="selectid" class="multi-select-title">Company</label>
-                                <span class="dropdown-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </span>
+                <form action="{% url 'webpages-candidate-filter' %}" class="filter-form">
+                    <div class="grid-wrapper">
+                        <!-- company filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="companyMultiSelect">Company</label>
+                                <select required name="company[]" id="companyMultiSelect" multiple>
+                                    <option value="1">Company 1</option>
+                                    <option value="2">Company 2 </option>
+                                    <option value="3">Company 3 </option>
+                                    <option value="4">Company 4 </option>
+                                </select>
                             </div>
-                            <div class="selected-option-wrapper">
+                        </div>
+                        <!-- company filter wrapper end -->
+                        <!-- candidate role filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateRoleMultiSelect">Candidate Role</label>
+                                <select required name="candidateRole" id="candidateRoleMultiSelect" multiple>
+                                    <option value="1">Graphic Designer</option>
+                                    <option value="2">Digital Marketer</option>
+                                    <option value="3">UI/UX Designer</option>
+                                    <option value="4">Software Developer</option>
+                                </select>
                             </div>
-                            <div class="option-wrapper">
-                                {% for company in companyList %}
-                                <div class="multi-select-option">
-                                    <input class="multi-select-option-input" type="checkbox" name="company" value="{{company.id}}" id="companyCheckBox{{company.id}}">
-                                    <label for="companyCheckBox{{company.id}}">{{company.company_name}}</label>
-                                </div>
-                                {% endfor %}
+                        </div>
+                        <!-- candidate role wrapper end -->
+                        <!-- interview status filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="interviewStatusMultiSelect">
+                                    Interview Status
+                                </label>
+                                <select required name="interviewStatus" id="interviewStatusMultiSelect" multiple>
+                                    <option value="1">All</option>
+                                    <option value="2">Approved Candidate</option>
+                                    <option value="3">Rejected Candidate</option>
+                                    <option value="4">Shortlisted</option>
+                                    <option value="5">Initial Communication</option>
+                                    <option value="6">HR Screening/Preliminary Interview</option>
+                                    <option value="7">Coordination for Technical/Functional Rounds</option>
+                                    <option value="8">Feedback and Follow-Up</option>
+                                    <option value="9">Final Interview</option>
+                                    <option value="10">Offer Rollout</option>
+                                    <option value="11">Post-Interview Process</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- interview status filter wrapper end -->
+                        <!-- candidate ctc filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateCtcMultiSelect">
+                                    Candidate CTC
+                                </label>
+                                <select required name="candidateCtc" id="candidateCtcMultiSelect" multiple>
+                                    <option value="0">All</option>
+                                    <option value="3">3 LPA</option>
+                                    <option value="7">7 LPA</option>
+                                    <option value="9">9 LPA</option>
+                                    <option value="12">12 LPA</option>
+                                    <option value="15">15 LPA</option>
+                                    <option value="18">18 LPA</option>
+                                    <option value="20">20 LPA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- candidate ctc filter wrapper end -->
+                        <!-- candidate skillsets filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateSkillsetMultiSelect">
+                                    Candidate Skillset
+                                </label>
+                                <select required name="candidateSkillset" id="candidateSkillsetMultiSelect" multiple>
+                                    <option value="1">All</option>
+                                    <option value="2">Adobe Photoshop</option>
+                                    <option value="3">Adobe After effect</option>
+                                    <option value="4">3D Modeling</option>
+                                    <option value="5">Content Writting</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- candidate skillsets filter wrapper end -->
+                        <!-- candidate experience filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="candidateExperienceMultiSelect">
+                                    Candidate Experience
+                                </label>
+                                <select required name="candidateExperience" id="candidateExperienceMultiSelect"
+                                    multiple>
+                                    <option value="1">All</option>
+                                    <option value="2">2 Year</option>
+                                    <option value="3">4 Year</option>
+                                    <option value="4">6 Year</option>
+                                    <option value="5">8 Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- candidate experience filter wrapper end -->
+                        <!-- reason to reject candidate filter wrapper start -->
+                        <div class="company-filter-wrapper">
+                            <div class="form-group">
+                                <label for="reasonToRejectCandidate">
+                                    Reason to Reject Candidate
+                                </label>
+                                <select required name="reasonToRejectCandidate" id="reasonToRejectCandidate" multiple>
+                                    <option value="1">All</option>
+                                    <!-- Job-Specific Reasons -->
+                                    {% for reason in reasonsToRejectCandidate %}
+                                    <option value="{{reason}}">{{reason}}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <!-- company based select end -->
-
-                    <!-- Candidate Role based select start -->
-                    <div class="select-wrapper">
-                        <div class="multi-select" id="selectid">
-                            <div class="select-title-wrapper">
-                                <label for="selectid" class="multi-select-title">Role</label>
-                                <span class="dropdown-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="selected-option-wrapper">
-                            </div>
-                            <div class="option-wrapper">
-                                {% for roleObj in candidateRoleList%}
-                                <!-- option 1 start  -->
-                                <div class="multi-select-option">
-                                    <input class="multi-select-option-input" type="checkbox" name="role" value="{{roleObj.role}}" id="candidateRoleCheckbox{{roleObj.id}}">
-                                    <label for="candidateRoleCheckbox{{roleObj.id}}">{{roleObj.role}}</label>
-                                </div>
-                                {% endfor %}
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Candidate Role based select end -->
-
-                    <!-- Interview Status select start -->
-                    <div class="select-wrapper">
-                        <div class="multi-select" id="selectid">
-                            <div class="select-title-wrapper">
-                                <label for="selectid" class="multi-select-title">Interview Status</label>
-                                <span class="dropdown-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="selected-option-wrapper">
-                            </div>
-                            <div class="option-wrapper">
-                                {% for interviewStatusObj in interviewStatusList %}
-                                <div class="multi-select-option">
-                                    <input class="multi-select-option-input" type="checkbox" name="interviewStatus" value="{{interviewStatusObj.interviewStatus}}" id="interviewStatusCheckbox{{interviewStatusObj.id}}">
-                                    <label for="interviewStatusCheckbox{{interviewStatusObj.id}}">{{interviewStatusObj.interviewStatus}}</label>
-                                </div>
-                                {% endfor %}
-                               
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Interview Status select end -->
-
-                    <!-- Candidate CTC start -->
-                    <div class="select-wrapper">
-                        <div class="multi-select" id="selectid">
-                            <div class="select-title-wrapper">
-                                <label for="selectid" class="multi-select-title">CTC</label>
-                                <span class="dropdown-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="selected-option-wrapper">
-                            </div>
-                            <div class="option-wrapper">
-                                {% for ctcObj in ctcList %}
-                                <div class="multi-select-option">
-                                    <input class="multi-select-option-input" type="checkbox" name="ctc" value="{{ctcObj.ctc}}" id="ctcCheckbox{{ctcObj.id}}">
-                                    <label for="ctcCheckbox{{ctcObj.id}}">{{ctcObj.ctc}} LPA</label>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Candidate CTC end -->
-                    
-                    <!-- Candidate Skillset start -->
-                    <div class="select-wrapper">
-                        <div class="multi-select" id="selectid">
-                            <div class="select-title-wrapper">
-                                <label for="selectid" class="multi-select-title">Skillset</label>
-                                <span class="dropdown-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="selected-option-wrapper">
-                            </div>
-                            <div class="option-wrapper">
-                                {% for skill in candidateSkillset %}
-                                <div class="multi-select-option">
-                                    <input class="multi-select-option-input" type="checkbox" name="candidateSkillset" value="{{skill.skill_name}}" id="candidateSkillsetCheckbox{{skill.id}}">
-                                    <label for="candidateSkillsetCheckbox{{skill.id}}">{{skill.skill_name}}</label>
-                                </div>
-                                {% endfor %}
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Candidate Skillset end -->
-
-                    <!-- Candidate Experience start -->
-                    <div class="select-wrapper">
-                        <div class="multi-select" id="selectid">
-                            <div class="select-title-wrapper">
-                                <label for="selectid" class="multi-select-title">Experience</label>
-                                <span class="dropdown-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="selected-option-wrapper">
-                            </div>
-                            <div class="option-wrapper">
-                                {% for experienceObj in experienceList %}
-                                <div class="multi-select-option">
-                                    <input class="multi-select-option-input" type="checkbox" name="experience" value="{{experienceObj.experience}}" id="experienceCheckbox{{experienceObj.id}}">
-                                    <label for="experienceCheckbox{{experienceObj.id}}">{{experienceObj.experience}} Years</label>
-                                </div>
-                                {% endfor %}
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Candidate Experience end -->
-
-                    <!-- Reason to Reject Candidate start -->
-                    <div class="select-wrapper">
-                        <div class="multi-select" id="selectid">
-                            <div class="select-title-wrapper">
-                                <label for="selectid" class="multi-select-title">Reason to Reject Candidate</label>
-                                <span class="dropdown-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-chevron-down">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="selected-option-wrapper">
-                            </div>
-                            <div class="option-wrapper">
-
-                                {% for reason in reasonsToRejectCandidate %}
-                                <!-- option {{reason.id}} start  -->
-                                <div class="multi-select-option">
-                                    <input class="multi-select-option-input" type="checkbox" name="reasonsToReject" value="{{reason}}" id="reasonsToRejectCandidatelabel{{reason.id}}">
-                                    <label for="reasonsToRejectCandidatelabel{{reason.id}}">{{reason}}</label>
-                                </div>
-                                <!-- option {{reason.id}} end  -->
-                                {% endfor %}
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Reason to Reject Candidate end -->
-
+                    <!-- reason to reject candidate filter wrapper end -->
+                    <!-- <button class="filter-form-btn" type="submit">Search</button> -->
                     <input type="submit" >
                 </form>
             </div>

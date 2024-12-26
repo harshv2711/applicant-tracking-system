@@ -20,6 +20,7 @@ class CandidateProfile(models.Model):
         verbose_name = "Candidate"
         verbose_name_plural = "Candidates"
 
+    resume_file = models.FileField(upload_to="candidate-resume", default="default.pdf")
     is_blocked = models.BooleanField(default=False)
     is_active = models.BooleanField(null=True, blank=True)
     first_name = models.CharField(max_length=255)
@@ -30,6 +31,8 @@ class CandidateProfile(models.Model):
     linkedin_profile = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=25)
     expected_ctc = models.CharField(max_length=50, null=True, blank=True)
+    ctc = models.FloatField(null=True, blank=True)
+    experience = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status_in_interview_choices = (
@@ -134,8 +137,7 @@ class JobPosting(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
+    
     def __str__(self):
         return f"{self.id} - {self.job_role} - {self.company.company_name}"
 # JobPosting model end 
