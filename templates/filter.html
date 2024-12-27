@@ -219,6 +219,7 @@
         <div class="container">
             <div class="filter-form-wrapper">
                 <form action="{% url 'webpages-candidate-filter' %}" method="POST" class="filter-form">
+                    {% csrf_token %}
                     <!-- company based select start-->
                     <div class="select-wrapper">
                         <div class="multi-select" id="selectid">

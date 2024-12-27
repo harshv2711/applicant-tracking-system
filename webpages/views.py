@@ -125,7 +125,6 @@ def filterCandidates(request):
         print(candidateEducationList)
         print(candidateSkillSetList)
         candidate.ratinglist = [ i for i in range(0, int(candidate.candidate_rating))]
-
         candidate.candidateTimelineList = candidateTimelineList
         candidate.candidateProjectList = candidateProjectList
         candidate.candidateExperienceList = candidateExperienceList
