@@ -172,56 +172,34 @@
         .multi-select-option:hover {
             background: rgb(232, 232, 232);
         }
+
+        .candidate-skill {
+            font-size: 14px;
+            padding: 3px;
+        }
+
+        .candidate-skill {
+            font-size: 12px;
+            padding: 3px 9px;
+            border-radius: 100vh;
+            border: 1px solid #cccc;
+        }
+
+        .skillset-wrapper {
+            margin: 1em 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3px;
+        }
     </style>
 
 </head>
 
 <body>
-    <!-- navbar start  -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-            <a class="navbar-brand" href="#">Pivonix
-                <small>ATS</small>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Search</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./import-application.html">Import</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Account
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Bookmarked Resume</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    Log Out
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- navbar end  -->
+     <!-- navbar start  -->
+     {% include 'inc/navbar.html' %}
+     <!-- navbar end  -->
     <section class="hero-section">
         <div class="container">
             <div class="section-header">
@@ -240,8 +218,7 @@
     <section class="filter-section">
         <div class="container">
             <div class="filter-form-wrapper">
-                <form action="{% url 'webpages-candidate-filter' %}" method="post" class="filter-form">
-                    {% csrf_token %}
+                <form action="{% url 'webpages-candidate-filter' %}" method="POST" class="filter-form">
                     <!-- company based select start-->
                     <div class="select-wrapper">
                         <div class="multi-select" id="selectid">
@@ -453,66 +430,39 @@
                                 {{candidate.first_name}} {{candidate.last_name}}
                             </h1>
                             <div class="candidate-profile-rating-wrapper">
-                                <span
-                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-star">
-                                        <polygon
-                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                        </polygon>
-                                    </svg>
-                                </span>
-                                <span
-                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-star">
-                                        <polygon
-                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                        </polygon>
-                                    </svg>
-                                </span>
-                                <span
-                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-star">
-                                        <polygon
-                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                        </polygon>
-                                    </svg>
-                                </span>
-                                <span
-                                    class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-star">
-                                        <polygon
-                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                        </polygon>
-                                    </svg>
-                                </span>
-                                <span class="candidate-profile-rating-star-icon-wrapper ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-star">
-                                        <polygon
-                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                        </polygon>
-                                    </svg>
-                                </span>
+                                {% for star in candidate.ratinglist %}
+                                    <span
+                                        class="candidate-profile-rating-star-icon-wrapper candidate-profile-rating-star-active">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-star">
+                                            <polygon
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                            </polygon>
+                                        </svg>
+                                    </span>
+                                {% endfor %}
+                                <small>
+                                    {{candidate.candidate_rating }} Star Rating
+                                </small>
                             </div>
                         </div>
                         <a href="media/{{candidate.resume_file}}" target="_blank" class="view-resume-cta">View Resume</a>
                         <p class="candidate-profile-info-item candidate-profile-info-item-role">{{candidate.role}}</p>
-                        <p class="candidate-profile-info-item candidate-profile-info-item-role">{{candidate.experience}} Years</p>
                         <p class="candidate-profile-info-item candidate-profile-info-item-email">
                             {{candidate.email}}
                         </p>
                         <p class="candidate-profile-info-item candidate-profile-info-item-phone-number">
                             {{candidate.phone_number}}
                         </p>
+                        <p class="candidate-profile-info-item candidate-profile-info-item-experience">{{candidate.experience}} Years</p>
+                        <p class="candidate-profile-info-item candidate-profile-info-item-ctc">{{candidate.ctc}} LPA</p>
+                        <div class="skillset-wrapper">
+                            {% for skillObj in candidate.candidateSkillSetList %}
+                            <span class="candidate-skill">{{skillObj.skill_name}}</span>
+                            {% endfor %}
+                        </div>
+                        
                         <!-- commen list start -->
                         <div class="comment-list">
                             <h3 class="wrapper-title comment-wrapper-title">

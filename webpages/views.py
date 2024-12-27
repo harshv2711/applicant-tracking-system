@@ -4,8 +4,8 @@ from .import service
 from . import models
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
 from client import utils as clientAppUtils
+
 
 lst =  {
     ("Shortlisted", "Shortlisted"),
@@ -29,7 +29,16 @@ for interviewStatus in models.CandidateProfile.status_in_interview_choices:
     num+=1
 
 # Create your views here.
+@login_required(login_url="user-login")
 def filterCandidates(request):
+    # checking is logined user is client
+    if not request.user.is_superuser:
+        if clientAppUtils.isLoggedInUserIsClient(request.user):
+            return render(request, "error-page.html", {
+                    "errorName":"Access Denied",
+                    "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+                })
+    
     print(interviewStatusList)
     reasonsToRejectCandidate = models.ReasonToRejectCandidate.objects.all()
     candidateSkillset = models.CandidateSkillset.objects.values('skill_name',"id")
@@ -51,42 +60,56 @@ def filterCandidates(request):
     candidates = models.CandidateProfile.objects.all()
     companyIdies = []
     role = []
+    interviewStatus = []
+    ctc = []
+    skills = [
+    ]
+    experience = 0
+    reasonsToReject = []
     if request.method == "POST":
         companyIdies = request.POST.getlist("company")
         role = request.POST.getlist("role")
         interviewStatus = request.POST.getlist("interviewStatus")
-        ctc = request.POST.getlist("ctc")
-        Skills = request.POST.getlist("candidateSkillset")
-        experience = request.POST.getlist("experience")
+        ctc = ctc + request.POST.getlist("ctc")
+        skills = request.POST.getlist("candidateSkillset")
+        if len(request.POST.getlist("experience")) != 0:
+            experience = max(request.POST.getlist("experience"))
         reasonsToReject = request.POST.getlist("reasonsToReject")
-        print(reasonsToReject, "+++++")
+        print(request.POST.getlist("experience"), "+++++++++++++++++++++")
 
     candidatesBasedOnCompany = models.ShortlistedCandidate.objects.filter(company__in=companyIdies)
     candidates = [candidate.candidate for candidate in candidatesBasedOnCompany]
     print("shortlistedCandidateBasedOnCompany", candidatesBasedOnCompany)
     candidatesBasedOnCandidateRole = models.CandidateProfile.objects.filter(role__in=role)
-    candidates+=list(candidatesBasedOnCandidateRole)
+    candidates += list(candidatesBasedOnCandidateRole)
     print("candidatesBasedOnCandidateRole", candidatesBasedOnCandidateRole)
-    candidatesBasedOnInterviewStatus = models.CandidateProfile.objects.filter(status_in_interview__icontains="Initial Communication")
+    candidatesBasedOnInterviewStatus = models.CandidateProfile.objects.filter(status_in_interview__in=interviewStatus)
+    for i in candidatesBasedOnInterviewStatus:
+        candidates.append(i)
+
     print("candidatesBasedOnInterviewStatus", candidatesBasedOnInterviewStatus)
-    candidatesBasedOnCandidateCTC = models.CandidateProfile.objects.filter(ctc__lte=3)
-    print("candidatesBasedOnCandidateCTC", candidatesBasedOnCandidateCTC)
-    skills = [
-        "Mern Stack",
-        "Javascript",
-        "Mysql Database"
-    ]
+   
+    if len(ctc) != 0:
+        candidatesBasedOnCandidateCTC = models.CandidateProfile.objects.filter(ctc__lte=max(ctc))
+        for i in candidatesBasedOnCandidateCTC:
+            candidates.append(i)
+        print("candidatesBasedOnCandidateCTC", candidatesBasedOnCandidateCTC)
+  
     candidatesBasedOnCandidateSkillset = models.CandidateSkillset.objects.filter(skill_name__in = skills)
+    for i in candidatesBasedOnCandidateSkillset:
+        candidates.append(i.candidate)
     print("candidatesBasedOnCandidateSkillset", candidatesBasedOnCandidateSkillset)
-    candidatesBasedOnCandidateExperience = models.CandidateProfile.objects.filter(experience__gte=1)
-    print("candidatesBasedOnCandidateExperience", candidatesBasedOnCandidateExperience)
-    reasonstoRejectCandidate = [
-        "Hiring Freeze",
-        "Location Constraints","Location Constraints"
-    ]
-    candidatesBasedOnReasontoRejectCandidate = models.RejectedCandidate.objects.filter(reason_to_reject__in = reasonstoRejectCandidate)
+
+    if experience != 0:
+        candidatesBasedOnCandidateExperience = models.CandidateProfile.objects.filter(experience__lte=experience)
+        for i in candidatesBasedOnCandidateExperience:
+            candidates.append(i)
+        print("candidatesBasedOnCandidateExperience", candidatesBasedOnCandidateExperience)
+   
+    candidatesBasedOnReasontoRejectCandidate = models.RejectedCandidate.objects.filter(reason_to_reject__in = reasonsToReject)
+    for i in candidatesBasedOnReasontoRejectCandidate:
+            candidates.append(i.candidate)
     print("candidatesBasedOnReasontoRejectCandidate", candidatesBasedOnReasontoRejectCandidate)
-    
 
     
     for candidate in candidates:
@@ -95,15 +118,19 @@ def filterCandidates(request):
         candidateProjectList = models.CandidateProject.objects.filter(candidate=candidate.id)
         candidateExperienceList = models.CandidateExperience.objects.filter(candidate=candidate.id)
         candidateEducationList = models.CandidateEducation.objects.filter(candidate=candidate.id)
+        candidateSkillSetList = models.CandidateSkillset.objects.filter(candidate=candidate.id)
         print(candidateTimelineList)
         print(candidateProjectList)
         print(candidateExperienceList)
         print(candidateEducationList)
+        print(candidateSkillSetList)
+        candidate.ratinglist = [ i for i in range(0, int(candidate.candidate_rating))]
 
         candidate.candidateTimelineList = candidateTimelineList
         candidate.candidateProjectList = candidateProjectList
         candidate.candidateExperienceList = candidateExperienceList
         candidate.candidateEducationList = candidateEducationList
+        candidate.candidateSkillSetList = candidateSkillSetList
 
     context = {
         "reasonsToRejectCandidate":reasonsToRejectCandidate,
@@ -121,11 +148,12 @@ def filterCandidates(request):
 
 @login_required(login_url="user-login")
 def companyList(request):
-    if clientAppUtils.isLoggedInUserIsClient(request.user):
-        return render(request, "error-page.html", {
-                "errorName":"Access Denied",
-                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
-            })
+    if not request.user.is_superuser:
+        if clientAppUtils.isLoggedInUserIsClient(request.user):
+            return render(request, "error-page.html", {
+                    "errorName":"Access Denied",
+                    "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+                })
 
     companyList = models.Company.objects.all()
     context = {
@@ -136,11 +164,12 @@ def companyList(request):
 
 @login_required(login_url="user-login")
 def companyProfile(request, id):
-    if clientAppUtils.isLoggedInUserIsClient(request.user):
-        return render(request, "error-page.html", {
-                "errorName":"Access Denied",
-                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
-            })
+    if not request.user.is_superuser:
+        if clientAppUtils.isLoggedInUserIsClient(request.user):
+            return render(request, "error-page.html", {
+                    "errorName":"Access Denied",
+                    "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+                })
     
     companyProfileObject = models.Company.objects.filter(id=id).first()
     jobPostinglist = models.JobPosting.objects.filter(company=companyProfileObject)
@@ -180,11 +209,12 @@ def homeView(request):
 
 @login_required(login_url="user-login")
 def searchView(request):
-    if clientAppUtils.isLoggedInUserIsClient(request.user):
-        return render(request, "error-page.html", {
-                "errorName":"Access Denied",
-                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
-            })
+    if not request.user.is_superuser:
+        if clientAppUtils.isLoggedInUserIsClient(request.user):
+            return render(request, "error-page.html", {
+                    "errorName":"Access Denied",
+                    "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+                })
 
     applicationList = []
     applicationLst = []
@@ -213,11 +243,12 @@ def searchView(request):
     
 @login_required(login_url="user-login")
 def importApplicationView(request):
-    if clientAppUtils.isLoggedInUserIsClient(request.user):
-        return render(request, "error-page.html", {
-                "errorName":"Access Denied",
-                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
-            })
+    if not request.user.is_superuser:
+        if clientAppUtils.isLoggedInUserIsClient(request.user):
+            return render(request, "error-page.html", {
+                    "errorName":"Access Denied",
+                    "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+                })
     
     if request.method == "POST":
         applicationList = request.FILES.getlist("applications")

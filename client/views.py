@@ -17,11 +17,12 @@ def clientHome(request):
 @login_required(login_url="user-login")
 def companyDashboard(request):
     # checking is logined user is client 
-    if not isLoggedInUserIsClient(request.user):
-        return render(request, "error-page.html", {
-                "errorName":"Access Denied",
-                "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
-            })
+    if not request.user.is_superuser:
+        if not isLoggedInUserIsClient(request.user):
+            return render(request, "error-page.html", {
+                    "errorName":"Access Denied",
+                    "errorDescription":"You do not have the required permissions to access this section of the dashboard. If you believe this is an error, please contact your administrator or support team for assistance."
+                })
     else:
         ClientViewPermissionObj = models.ClientViewPermission.objects.filter(client=request.user.id).first()
 
