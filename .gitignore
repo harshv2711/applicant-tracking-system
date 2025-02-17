@@ -1,0 +1,61 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env
+*.venv
+
+# Django stuff
+*.log
+local_settings.py
+/db.sqlite3
+/db.sqlite3-journal
+
+# Media and static files
+/media
+/static
+/staticfiles
+
+# Migrations (optional, can be included in version control)
+**/migrations/*.pyc
+**/migrations/*.pyo
+**/migrations/__pycache__/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Pipenv and poetry
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Docker
+*.log
+*.pid
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+.nox/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# MyPy
+dmypy.json
+.dmypy_cache/
+
+# Pytest
+.pytest_cache/
