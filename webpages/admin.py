@@ -36,6 +36,7 @@ class ApplicationAdmin(ModelAdmin, ImportExportModelAdmin):
         "application_text",
         "applicationOwner__username"
     ]
+    list_filter = ["created_at",]
 
 @admin.register(CandidateSkillset)
 class CandidateSkillsetAdmin(ModelAdmin, ImportExportModelAdmin):
