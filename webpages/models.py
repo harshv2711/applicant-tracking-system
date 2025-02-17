@@ -206,6 +206,11 @@ class CompanyProfileViewPermission(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.company.company_name}"
     
+class ReasonToRejectCandidate(models.Model):
+    reason = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.reason}"
 
 class RejectedCandidate(models.Model):
     is_active = models.BooleanField(default=True)
@@ -237,13 +242,8 @@ class RejectedCandidate(models.Model):
         ("Conflict of Interest","Conflict of Interest"),
         )
     
-    reason_to_reject = models.CharField(max_length=255, choices=reasons)
+    reason_to_reject = models.ForeignKey(ReasonToRejectCandidate, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.candidate.email} - {self.reason_to_reject}"
+        return f"{self.candidate.email}"
     
-class ReasonToRejectCandidate(models.Model):
-    reason = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"{self.reason}"
