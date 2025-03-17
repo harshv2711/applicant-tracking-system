@@ -242,6 +242,8 @@ def searchView(request):
     
 @login_required(login_url="user-login")
 def importApplicationView(request):
+    folderList = models.Folder.objects.all()
+
     if not request.user.is_superuser:
         if clientAppUtils.isLoggedInUserIsClient(request.user):
             return render(request, "error-page.html", {
@@ -251,6 +253,9 @@ def importApplicationView(request):
     
     if request.method == "POST":
         applicationList = request.FILES.getlist("applications")
+        folderId = request.POST["folderId"]
+        folderObj = models.Folder.objects.filter(id=folderId).first()
+
         print("++++++")
         print(applicationList)
         for application in applicationList:
@@ -262,7 +267,10 @@ def importApplicationView(request):
                 application_text = service.convertPdfToText(application),
                 applicationOwner = request.user
             )
+
             applicationObj.save() 
+            fileObj = models.File(folder=folderObj,file=applicationObj)
+            fileObj.save()
             messages.success(request, f'Application Uploaded Sucessfully!')
 
-    return render(request, "import.html", ) 
+    return render(request, "import.html", {"folderList":folderList}) 

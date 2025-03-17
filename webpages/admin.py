@@ -12,7 +12,9 @@ from .models import (
     CandidateProject,
     CandidateEducation,
     RejectedCandidate,
-    ReasonToRejectCandidate
+    ReasonToRejectCandidate,
+    Folder,
+    File
 )
 from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
@@ -27,6 +29,18 @@ from import_export.admin import ImportExportModelAdmin
 # admin.site.register(JobPosting)
 # admin.site.register(ShortlistedCandidate)
 # admin.site.register(ShortlistedCandidateTimeline)
+
+@admin.register(Folder)
+class FolderAdmin(ModelAdmin, ImportExportModelAdmin):
+    list_display = ["folder_name", "created_at", "updated_at"]
+    search_fields = ["folder_name", "created_at", "updated_at"]
+    list_filter = ["created_at"]
+
+@admin.register(File)
+class FileAdmin(ModelAdmin, ImportExportModelAdmin):
+    list_display = ["file", "folder", "created_at", "updated_at"]
+    search_fields = ["file__application_name", "created_at", "updated_at"]
+    list_filter = ["created_at", "folder", ]
 
 @admin.register(Application)
 class ApplicationAdmin(ModelAdmin, ImportExportModelAdmin):

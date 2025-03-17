@@ -2,6 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class Folder(models.Model):
+    folder_name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.folder_name}"
+
 class Application(models.Model):
     application = models.FileField(upload_to="media")
     application_name = models.CharField(max_length=255)
@@ -14,6 +22,15 @@ class Application(models.Model):
     def __str__(self):
         return f"{self.application_name}"
 # Application model end 
+
+class File(models.Model):
+    folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
+    file  = models.ForeignKey(Application, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.file.application_name}"
 
 class CandidateProfile(models.Model):
     class Meta:
