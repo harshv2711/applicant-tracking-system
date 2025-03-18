@@ -40,7 +40,7 @@ class FolderAdmin(ModelAdmin, ImportExportModelAdmin):
 class FileAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = ["file", "folder", "created_at", "updated_at"]
     search_fields = ["file__application_name", "created_at", "updated_at"]
-    list_filter = ["created_at", "folder", ]
+    list_filter = ["created_at", "folder__folder_name"]
 
 @admin.register(Application)
 class ApplicationAdmin(ModelAdmin, ImportExportModelAdmin):
