@@ -231,10 +231,16 @@ def searchView(request):
             if not (item in applicationLst):
                 applicationLst.append(item)
 
+    folders = models.Folder.objects.all()
+    for folder in folders:
+        folder.files = models.File.objects.filter(folder=folder)
+        print(folder.files)
+
     context = {
         "applicationList":applicationLst,
         "applicationLen":len(applicationLst),
         "keywordsValue":keywordsValue,
+        "folders":folders,
     }
 
     return render(request, "search.html", context = context)
@@ -274,3 +280,13 @@ def importApplicationView(request):
             messages.success(request, f'Application Uploaded Sucessfully!')
 
     return render(request, "import.html", {"folderList":folderList}) 
+
+
+def fileManager(request):
+    folders = models.Folder.objects.all()
+    for folder in folders:
+        folder.files = models.File.objects.filter(folder=folder)
+        print(folder.files)
+    return render(request, "file-manager.html", {
+        "folders":folders,
+    })

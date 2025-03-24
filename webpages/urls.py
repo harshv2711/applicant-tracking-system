@@ -5,7 +5,8 @@ from .views import (
     importApplicationView, 
     companyProfile,
     companyList,
-    filterCandidates
+    filterCandidates,
+    fileManager
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path("company-profile/<int:id>", view=companyProfile, name="webpages-company-profile"),
     path("company", view=companyList, name="webpages-company-list"),
     path("candidate-filter", view=filterCandidates, name="webpages-candidate-filter"),
+    path("file-manager", view=fileManager, name="webpages-file-manager-home"),
 ]
