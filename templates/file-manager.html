@@ -92,9 +92,9 @@
                                     <a href="#" class="download-file-link">Download</a>
                                 </div>
                             </li>
-                            {% for file in folder.files %}
+                            {% for i in folder.files %}
                             <li class="file-list-item ">
-                                <a href="/media/media/{{file}}" class="file-list-item-link">{{file}}</a>
+                                <a href="{{i.file.application.url}}" class="file-list-item-link">{{i}}</a>
                                 <div class="col-wrapper">
                                     <div class="col">{{file.created_at|date:"d M, Y"}}</div>
                                     <div class="col">{{file.updated_at|date:"d M, Y"}}</div>
