@@ -286,6 +286,8 @@ def fileManager(request):
     folders = models.Folder.objects.all()
     for folder in folders:
         folder.files = models.File.objects.filter(folder=folder)
+        for i in folder.files:
+            print(i.file.application)
         print(folder.files)
     return render(request, "file-manager.html", {
         "folders":folders,
