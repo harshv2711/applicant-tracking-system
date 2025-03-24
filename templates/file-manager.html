@@ -98,7 +98,7 @@
                                 <div class="col-wrapper">
                                     <div class="col">{{file.created_at|date:"d M, Y"}}</div>
                                     <div class="col">{{file.updated_at|date:"d M, Y"}}</div>
-                                    <a download="" href="/media/media/{{file}}" class="download-file-link">Download</a>
+                                    <a download="" href="{{i.file.application.url}}" class="download-file-link">Download</a>
                                 </div>
                             </li>
                             {% endfor %}
