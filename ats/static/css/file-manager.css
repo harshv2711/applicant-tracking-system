@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+
+* {
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
+
+body {
+    height: 100%;
+}
+
+.file-manager-section .row {
+    display: flex;
+}
+
+.folder-list {
+    padding: 0%;
+    margin: 0%;
+    list-style: none;
+}
+
+.file-list {
+    padding: 0%;
+    margin: 0%;
+    list-style: none;
+}
+
+.folder-list-item-link,
+.file-list-item-link {
+    transition: 0.3s;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    display: block;
+    min-width: 282px;
+}
+
+.file-container-wrapper {
+    width: 100%;
+}
+
+.folder-list-item-link {
+    border: 1px solid rgb(245, 245, 245);
+    border: none;
+    border-collapse: collapse;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+
+.folder-icon {
+    height: 28px;
+    padding: 6px 3px 3px 4px;
+}
+
+.folder-container {
+    height: 100%;
+}
+
+.folder-list-item-link:hover {
+    background: rgb(239, 239, 239);
+    padding-left: 12px;
+}
+
+.file-list-item-link {
+    display: block;
+    font-size: 16px;
+    padding: 3px 16px;
+    display: flex;
+    width: 100%;
+}
+
+.file-list-item {
+    transition: 0.3s;
+}
+
+.file-list-item:hover {
+    background: rgb(239, 239, 239);
+    padding-left: 12px;
+}
+
+.download-file-link {
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    color: gray;
+}
+
+.file-list-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    justify-content: space-between;
+}
+
+.col-wrapper {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 120px 120px 120px;
+    gap: 1em;
+}
+
+.file-row-header {
+    padding: 9px 0;
+    background: rgb(239, 239, 239);
+}
+
+.file-row-header:hover {
+    padding-left: 0px;
+}
+
+.file-container-wrapper {
+    border-left: 1px solid rgb(219, 219, 219);
+}
+
+.file-search-form input {
+    padding: 6px;
+    border: 1px solid gray;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+.file-search-form button {
+    padding: 6px;
+    font-size: 16px;
+}
+
+.folder-list-item-link-active {
+    background: rgb(230 250 255);
+    border-radius: 2px;
+    margin-right: 6px;
+    margin-bottom: 3px;
+}
+
+.file-manager-section .container {
+    max-width: 920px;
+    margin: auto;
+}
