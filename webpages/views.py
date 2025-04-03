@@ -5,7 +5,7 @@ from . import models
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from client import utils as clientAppUtils
-
+from django.views.decorators.csrf import csrf_exempt
 
 lst =  {
     ("Shortlisted", "Shortlisted"),
@@ -292,3 +292,35 @@ def fileManager(request):
     return render(request, "file-manager.html", {
         "folders":folders,
     })
+
+# @csrf_exempt  # Use only if CSRF protection is not needed (e.g., API calls)
+# def renameFolderName(request, id):
+#     if request.method == "POST":
+#         folder_name = request.POST.get("folderName")
+#         folder_id = request.POST.get("folderId")
+#         print(id, "folder id ++++++++++++++")
+#         folderObj = models.Folder.objects.filter(id=id).first()
+#         folderObj.folder_name = folder_name
+#         folderObj.save()
+#     return redirect("webpages-file-manager-home")
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404, redirect
+from . import models  # Import your models
+
+@csrf_exempt  # Remove this if CSRF protection is needed
+def renameFolderName(request, id):
+    if request.method == "POST":
+        folder_name = request.POST.get("folderName")
+        
+        # Get the folder object or return error
+        folder_obj = get_object_or_404(models.Folder, id=id)
+        folder_obj.folder_name = folder_name
+        folder_obj.save()
+        
+        # Return a JSON response for AJAX
+        return JsonResponse({"success": True, "message": "Folder renamed successfully"})
+
+    return JsonResponse({"success": False, "message": "Invalid request method"}, status=400)
