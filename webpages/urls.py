@@ -6,7 +6,8 @@ from .views import (
     companyProfile,
     companyList,
     filterCandidates,
-    fileManager
+    fileManager,
+    renameFolderName
 )
 
 urlpatterns = [
@@ -17,4 +18,5 @@ urlpatterns = [
     path("company", view=companyList, name="webpages-company-list"),
     path("candidate-filter", view=filterCandidates, name="webpages-candidate-filter"),
     path("file-manager", view=fileManager, name="webpages-file-manager-home"),
+    path("rename-folder-name/<int:id>/", view=renameFolderName, name="webpages-rename-folder-name"),
 ]
